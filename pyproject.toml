@@ -1,0 +1,11 @@
+[project]
+name = "nuitka-build-config"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.14"
+dependencies = [
+    "nuitka>=4.0.7",
+    "pathlike-typing>=1.0.0",
+    "pydantic>=2.12.5",
+    "ruamel-yaml>=0.19.1",
+]
