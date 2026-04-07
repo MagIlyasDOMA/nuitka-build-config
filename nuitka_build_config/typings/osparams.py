@@ -11,6 +11,7 @@ class BaseOSParams(TypedDict, total=False):
 class WindowsParams(BaseOSParams):
     console_mode: Literal['disable', 'force']
     uac_admin: bool
+    uac_uiaccess: bool
 
 
 class MacOSParams(BaseOSParams):
