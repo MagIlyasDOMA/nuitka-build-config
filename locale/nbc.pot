@@ -1,0 +1,205 @@
+# Translations template for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-04-08 16:21+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: nuitka_build_config/models/__init__.py:11
+msgid "List of packages to include in the build (--include-package)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:13
+msgid "List of modules to include in the build (--include-module)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:15
+msgid "Packages whose data files should be included (--include-package-data)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:16
+msgid "File patterns to include (--include-data-files)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:18
+msgid "Data directories to include (--include-data-dir)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:20
+msgid "File patterns to exclude from data (--noinclude-data-files)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:24
+msgid "Company name in version info (--company-name)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:25
+msgid "Product name in version info (--product-name)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:26
+msgid "File version in X.X.X.X format (--file-version)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:27
+msgid "Copyright text (--copyright)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:33
+msgid ""
+"Compilation mode: 'accelerated' (with Python dependency), 'standalone' "
+"(folder with exe), 'onefile' (single exe), 'module' (extension module), "
+"'app' (onefile for macOS with .app), 'app-dist' (standalone for macOS "
+"with .app), 'package' (package as module), 'dll' (experimental)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:40
+msgid "Run the compiled binary immediately after compilation (--run)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:45
+msgid "Settings for including additional modules, packages and data files"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:50
+msgid ""
+"Follow all imported modules. In standalone mode defaults to True "
+"(--follow-imports)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:55
+msgid ""
+"Follow into the specified modules/packages (--follow-import-to). Example:"
+" 'requests', 'numpy'"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:60
+msgid ""
+"DO NOT follow into the specified modules/packages. Supports patterns, "
+"e.g. '*.tests' (--nofollow-import-to)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:65
+msgid ""
+"List of plugins to enable (--enable-plugins). Example: 'tk-inter', 'anti-"
+"bloat'"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:70
+msgid "List of plugins to disable (--disable-plugins)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:75
+msgid "Main file to compile (alternative to positional argument --main)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:80
+msgid ""
+"Follow into standard library modules. Increases compilation time "
+"(--follow-stdlib)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:85
+msgid "Windows parameters: console mode, UAC, icon, etc."
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:90
+msgid "macOS parameters: .app bundle creation, signing, version, etc."
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:95
+msgid "Linux parameters: icon and other settings"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:100
+msgid ""
+"Python flags: '-S' (no_site), '-O' (no_asserts), 'no_warnings', "
+"'no_docstrings', '-u' (unbuffered)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:105
+msgid ""
+"Number of parallel compilation jobs. Negative values = CPU cores minus "
+"value (--jobs)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:110
+msgid "Enable debug mode: self-checks, additional checks (--debug)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:115
+msgid "Create an XML compilation report (--report)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:120
+msgid "Directory for output files (build, dist, binaries) (--output-dir)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:125
+msgid ""
+"Name of the output executable. For onefile may include path (--output-"
+"filename)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:130
+msgid "Remove the build directory after creating the binary (--remove-output)"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:135
+msgid "Additional Nuitka command line flags not described in this model"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:140
+msgid ""
+"Version info for Windows/macOS: company name, product name, file version,"
+" copyright"
+msgstr ""
+
+#: nuitka_build_config/models/osparams.py:13
+msgid ""
+"Path to icon file. On Windows: --windows-icon-from-ico, on macOS: "
+"--macos-app-icon, on Linux: --linux-icon"
+msgstr ""
+
+#: nuitka_build_config/models/osparams.py:20
+msgid ""
+"Windows console mode: 'force' - create a console window (if not started "
+"from console), 'disable' - do not create a console (--windows-console-"
+"mode)"
+msgstr ""
+
+#: nuitka_build_config/models/osparams.py:26
+msgid "Request administrator privileges via UAC on launch (--windows-uac-admin)"
+msgstr ""
+
+#: nuitka_build_config/models/osparams.py:31
+msgid ""
+"Request UAC to launch only from specific folders and remote access "
+"(--windows-uac-uiaccess)"
+msgstr ""
+
+#: nuitka_build_config/models/osparams.py:38
+msgid ""
+"Create a .app bundle instead of a regular binary. Enables standalone mode"
+" (--macos-create-app-bundle)"
+msgstr ""
+
+#: nuitka_build_config/models/osparams.py:43
+msgid ""
+"Application name for macOS signing in 'com.YourCompany.AppName' format. "
+"Globally unique identifier for accessing protected APIs (--macos-signed-"
+"app-name)"
+msgstr ""
+
