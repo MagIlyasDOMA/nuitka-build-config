@@ -13,4 +13,8 @@ dependencies = [
 [dependency-groups]
 dev = [
     "babel>=2.18.0",
+    "devscript>=0.1.1",
 ]
+
+[devscript]
+sync = "git pull origin && uv sync"
