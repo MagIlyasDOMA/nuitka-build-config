@@ -9,3 +9,8 @@ dependencies = [
     "pydantic>=2.12.5",
     "ruamel-yaml>=0.19.1",
 ]
+
+[dependency-groups]
+dev = [
+    "babel>=2.18.0",
+]
