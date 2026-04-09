@@ -21,6 +21,15 @@ wheels = [
 ]
 
 [[package]]
+name = "bidict"
+version = "0.23.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/9a/6e/026678aa5a830e07cd9498a05d3e7e650a4f56a42f267a53d22bcda1bdc9/bidict-0.23.1.tar.gz", hash = "sha256:03069d763bc387bbd20e7d49914e75fc4132a41937fa3405417e1a5a2d006d71", size = 29093, upload-time = "2024-02-18T19:09:05.748Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/99/37/e8730c3587a65eb5645d4aba2d27aae48e8003614d6aaf15dda67f702f1f/bidict-0.23.1-py3-none-any.whl", hash = "sha256:5dae8d4d79b552a71cbabc7deb25dfe8ce710b17ff41711e13010ead2abfc3e5", size = 32764, upload-time = "2024-02-18T19:09:04.156Z" },
+]
+
+[[package]]
 name = "devscript"
 version = "0.1.1"
 source = { registry = "https://pypi.org/simple" }
@@ -30,6 +39,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d8/9b/2205013bf2a8e0fd1a589548adb6bfa7a0e908788c73b739a0c2b66305c4/devscript-0.1.1.tar.gz", hash = "sha256:f86b27b12c2de16c9df019f091427fd1ec73a3fd7836282b3f823d3781c41db8", size = 18924, upload-time = "2026-03-15T14:21:36.076Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/cb/e3/cd248b5ac645fe51aea6c0022a54f5aad5eccaefe9c87ba45231df61be9b/devscript-0.1.1-py3-none-any.whl", hash = "sha256:29c642d871425f6113f97f35b3f6df64a21007cc6440a9472442256c465c8f50", size = 18624, upload-time = "2026-03-15T14:21:34.44Z" },
+]
+
+[[package]]
+name = "locale-plus"
+version = "0.1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "bidict" },
+    { name = "pathlike-typing" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/06/79/c10920c202233a47e2f4778e176fc9ffba468c2f771ed1f318baffdaea13/locale_plus-0.1.1.tar.gz", hash = "sha256:5c00fe0199ae197a2f9bd25a149f31936781655145d167ce5a893f6888480cf6", size = 6786, upload-time = "2026-04-09T17:53:14.872Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/40/39/74379d886fb2e747eb0cba974aee542d14169724240ecb7a96c64931163f/locale_plus-0.1.1-py3-none-any.whl", hash = "sha256:7b2e3cd7e92a84215b69bff4219a22cd16c15a49fcc5e9bdd3f7ef5fc1bcbcfa", size = 6925, upload-time = "2026-04-09T17:53:13.918Z" },
 ]
 
 [[package]]
@@ -43,6 +65,7 @@ name = "nuitka-build-config"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "locale-plus" },
     { name = "nuitka" },
     { name = "pathlike-typing" },
     { name = "pydantic" },
@@ -57,6 +80,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "locale-plus", specifier = ">=0.1.1" },
     { name = "nuitka", specifier = ">=4.0.7" },
     { name = "pathlike-typing", specifier = ">=1.0.0" },
     { name = "pydantic", specifier = ">=2.12.5" },
