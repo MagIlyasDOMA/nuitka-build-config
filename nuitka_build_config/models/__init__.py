@@ -1,3 +1,4 @@
+import yaml
 from typing import Optional, Set
 from pathlike_typing import PathLike
 from pydantic import BaseModel, Field
@@ -139,3 +140,15 @@ class NuitkaConfig(BaseModel):
         default_factory=VersionInfo,
         description=gettext("Version info for Windows/macOS: company name, product name, file version, copyright")
     )
+
+    model_config = dict(
+        title='nuitka-build-config',
+        description='nuitka build config',
+    )
+
+    @classmethod
+    def from_yaml_file(cls, path: PathLike) -> NuitkaConfig:
+        with open(path, encoding='utf-8') as file:
+            data = yaml.safe_load(file)
+            if not isinstance(data, dict): data = dict()
+        return cls.model_validate(data)

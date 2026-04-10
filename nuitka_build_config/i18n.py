@@ -5,8 +5,4 @@ from locale_plus import Internationalizator
 
 locale.setlocale(locale.LC_ALL, '')
 
-internationalizator = Internationalizator()
-
-with open(mo_path, 'rb') as file:
-    lang = i18n_lib.GNUTranslations(file)
-gettext = lang.gettext
+gettext = Internationalizator(Path(__file__).parent / 'locale', domain='nbc').gettext

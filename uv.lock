@@ -43,15 +43,20 @@ wheels = [
 
 [[package]]
 name = "locale-plus"
-version = "0.1.1"
-source = { registry = "https://pypi.org/simple" }
+version = "0.1.2"
+source = { path = "../locale_plus/dist/locale_plus-0.1.2-py3-none-any.whl" }
 dependencies = [
     { name = "bidict" },
     { name = "pathlike-typing" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/06/79/c10920c202233a47e2f4778e176fc9ffba468c2f771ed1f318baffdaea13/locale_plus-0.1.1.tar.gz", hash = "sha256:5c00fe0199ae197a2f9bd25a149f31936781655145d167ce5a893f6888480cf6", size = 6786, upload-time = "2026-04-09T17:53:14.872Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/40/39/74379d886fb2e747eb0cba974aee542d14169724240ecb7a96c64931163f/locale_plus-0.1.1-py3-none-any.whl", hash = "sha256:7b2e3cd7e92a84215b69bff4219a22cd16c15a49fcc5e9bdd3f7ef5fc1bcbcfa", size = 6925, upload-time = "2026-04-09T17:53:13.918Z" },
+    { filename = "locale_plus-0.1.2-py3-none-any.whl", hash = "sha256:9353c944229383f5af93944761b959149a01819e17fd7bec8df72ff4a66fb09e" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "bidict", specifier = ">=0.23.1" },
+    { name = "pathlike-typing", specifier = ">=1.0.0" },
 ]
 
 [[package]]
@@ -69,6 +74,7 @@ dependencies = [
     { name = "nuitka" },
     { name = "pathlike-typing" },
     { name = "pydantic" },
+    { name = "pyyaml" },
     { name = "ruamel-yaml" },
 ]
 
@@ -80,10 +86,11 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "locale-plus", specifier = ">=0.1.1" },
-    { name = "nuitka", specifier = ">=4.0.7" },
+    { name = "locale-plus", path = "../locale_plus/dist/locale_plus-0.1.2-py3-none-any.whl" },
+    { name = "nuitka", specifier = ">=4.0.5" },
     { name = "pathlike-typing", specifier = ">=1.0.0" },
     { name = "pydantic", specifier = ">=2.12.5" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "ruamel-yaml", specifier = ">=0.19.1" },
 ]
 
