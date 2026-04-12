@@ -1,9 +1,10 @@
 import yaml
-from typing import Optional, Set
+from typing import Optional, Set, cast
 from pathlike_typing import PathLike
 from pydantic import BaseModel, Field
 from ..i18n import gettext
 from ..typings import *
+from ..typings.models import NuitkaConfigDict
 from .osparams import *
 
 
@@ -152,3 +153,13 @@ class NuitkaConfig(BaseModel):
             data = yaml.safe_load(file)
             if not isinstance(data, dict): data = dict()
         return cls.model_validate(data)
+
+    def to_dict(self) -> NuitkaConfigDict:
+        return model2dict(self) # type: ignore
+
+
+def model2dict(model: BaseModel) -> dict:
+    output = dict(model)
+    for key, value in output.copy().items():
+        if isinstance(value, BaseModel): output[key] = model2dict(value)
+    return output

@@ -2,8 +2,9 @@
 name = "nuitka-build-config"
 version = "0.1.0"
 description = "Add your description here"
-requires-python = ">=3.14"
+requires-python = ">=3.13"
 dependencies = [
+    "hrenpack>=3.0.0b5",
     "locale-plus>=0.1.2",
     "nuitka>=4.0.5",
     "pathlike-typing>=1.0.0",

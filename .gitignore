@@ -5,3 +5,4 @@ structure.txt
 test.py
 *.pyc
 nuitka_build_config/descriptors.py
+/pydantic2typedict.py
