@@ -229,3 +229,7 @@ msgstr ""
 "Application name for macOS signing in 'com.YourCompany.AppName' format. "
 "Globally unique identifier for accessing protected APIs (--macos-signed-"
 "app-name)"
+
+#: models/osparams.py:147
+msgid "Console output verbosity level: info (default), quiet, verbose"
+msgstr "Console output verbosity level: info (default), quiet, verbose"

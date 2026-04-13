@@ -197,3 +197,6 @@ msgid ""
 "app-name)"
 msgstr ""
 
+#: models/osparams.py:147
+msgid "Console output verbosity level: info (default), quiet, verbose"
+msgstr ""

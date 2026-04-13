@@ -50,7 +50,7 @@ class NuitkaConfigDict(TypedDict, total=False):
     nofollow_import_to: StrList
     plugins: StrList
     disable_plugins: StrList
-    main: Optional[PathLike]
+    main: NullPathLike
     follow_stdlib: bool
     windows_params: WindowsParamsDict
     macos_params: MacOSParamsDict
@@ -58,9 +58,10 @@ class NuitkaConfigDict(TypedDict, total=False):
     python_flags: Set[PythonFlagType]
     jobs: Optional[int]
     debug: bool
-    report: bool
-    output_dir: Optional[PathLike]
+    report: NullPathLike
+    output_dir: NullPathLike
     output_name: NullStr
     remove_output: bool
     extra_flags: StrList
     version_info: VersionInfoDict
+    verbosity: Verbosity

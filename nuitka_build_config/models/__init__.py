@@ -72,7 +72,7 @@ class NuitkaConfig(BaseModel):
         description=gettext("List of plugins to disable (--disable-plugins)")
     )
 
-    main: Optional[PathLike] = Field(
+    main: NullPathLike = Field(
         default=None,
         description=gettext("Main file to compile (alternative to positional argument --main)")
     )
@@ -112,12 +112,12 @@ class NuitkaConfig(BaseModel):
         description=gettext("Enable debug mode: self-checks, additional checks (--debug)")
     )
 
-    report: bool = Field(
-        default=False,
+    report: NullPathLike = Field(
+        default=None,
         description=gettext("Create an XML compilation report (--report)")
     )
 
-    output_dir: Optional[PathLike] = Field(
+    output_dir: NullPathLike = Field(
         default=None,
         description=gettext("Directory for output files (build, dist, binaries) (--output-dir)")
     )
@@ -140,6 +140,11 @@ class NuitkaConfig(BaseModel):
     version_info: VersionInfo = Field(
         default_factory=VersionInfo,
         description=gettext("Version info for Windows/macOS: company name, product name, file version, copyright")
+    )
+
+    verbosity: Verbosity = Field(
+        default='info',
+        description=gettext("Console output verbosity level: info (default), quiet, verbose")
     )
 
     model_config = dict(

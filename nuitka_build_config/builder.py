@@ -5,7 +5,7 @@ from pathlike_typing import PathLike
 from hrenpack.descriptors import CachedProperty, UncacheProperty
 from .decorators import argv_add
 from .models import NuitkaConfig
-from .typings import StrList, PythonFlagType, ArgvAddMethod
+from .typings import *
 from .typings.models import *
 
 __all__ = ['NuitkaBuilder']
@@ -13,6 +13,7 @@ __all__ = ['NuitkaBuilder']
 
 class NuitkaBuilder:
     config_path: Path = UncacheProperty('config', 'argv', 'command')
+    main: Path = UncacheProperty('config', 'argv', 'command')
 
     def __init__(self, config_path: PathLike = 'nbc-config.yaml'):
         self.config_path = Path(config_path)
@@ -25,7 +26,14 @@ class NuitkaBuilder:
 
     @argv_add
     def _add_include(self, argv: StrList, arg: IncludesDict) -> StrList:
-        pass
+        output = list()
+        output.extend([f'--include-package={package}' for package in arg['packages']])
+        output.extend([f'--include-module={module}' for module in arg['modules']])
+        output.extend([f'--include-package-data={package}'] for package in arg['package_data'])
+        output.extend([f'--include-data-files={file}' for file in arg['files']])
+        output.extend([f'--include-data-dir={directory}' for directory in arg['directories']])
+        output.extend([f'--noinclude-data-files={pattern}' for pattern in arg['noinclude_data_files']])
+        return output
 
     @argv_add
     def _add_follow_imports(self, argv: StrList, arg: Optional[bool]) -> StrList:
@@ -50,7 +58,9 @@ class NuitkaBuilder:
         return [f'--disable-plugins={plugin}' for plugin in arg]
 
     @argv_add
-    def _add_main(self, argv: StrList, arg: PathLike) -> StrList: return [f'--main={arg}']
+    def _add_main(self, argv: StrList, arg: NullPathLike) -> StrList:
+        # TODO: Implement exception handling and self.main support
+        return [f'--main={arg}']
 
     @argv_add
     def _add_follow_stdlib(self, argv: StrList, arg: bool) -> StrList:
@@ -102,11 +112,11 @@ class NuitkaBuilder:
         return ['--debug'] if arg else []
 
     @argv_add
-    def _add_report(self, argv: StrList, arg: bool) -> StrList:
+    def _add_report(self, argv: StrList, arg: NullPathLike) -> StrList:
         return ['--report'] if arg else []
 
     @argv_add
-    def _add_output_dir(self, argv: StrList, arg: PathLike) -> StrList:
+    def _add_output_dir(self, argv: StrList, arg: NullPathLike) -> StrList:
         return [f'--output-dir={arg}'] if arg else []
 
     @argv_add
@@ -116,6 +126,14 @@ class NuitkaBuilder:
     @argv_add
     def _add_remove_output(self, argv: StrList, arg: bool) -> StrList:
         return ['--remove-output'] if arg else []
+
+    @argv_add
+    def _add_verbosity(self, argv: StrList, arg: Verbosity) -> StrList:
+        match arg:
+            case 'info': return []
+            case 'quiet': return ['--quiet']
+            case 'verbose': return ['--verbose']
+            case _: raise KeyError(arg)
 
     @argv_add
     def _add_extra_flags(self, argv: StrList, arg: StrList) -> StrList: return arg
@@ -135,8 +153,9 @@ class NuitkaBuilder:
     def _get_argv_add_method_name(attr_name: str):
         return f'_add_{attr_name}'
 
-    def _get_argv_add_method(self, attr_name: str) -> ArgvAddMethod:
-        return getattr(self, self._get_argv_add_method_name(attr_name))
+    @classmethod
+    def _get_argv_add_method(cls, attr_name: str) -> ArgvAddMethod:
+        return getattr(cls, cls._get_argv_add_method_name(attr_name))
 
     @CachedProperty
     def config(self) -> NuitkaConfigDict:
@@ -147,11 +166,12 @@ class NuitkaBuilder:
         argv = [sys.executable, '-m', 'nuitka']
         config: NuitkaConfigDict = self.config
         for key, value in config.items():
-            self._get_argv_add_method(key)(argv, value) # type: ignore
+            self._get_argv_add_method(key)(self, argv, value)
         return argv
 
     @CachedProperty
     def command(self) -> str:
+        # TODO: Implement proper quoting of arguments
         argv = self.argv
         if platform.system() == 'Windows': return subprocess.list2cmdline(argv)
         return ' '.join(shlex.quote(arg) for arg in argv)

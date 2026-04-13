@@ -21,3 +21,4 @@ dev = [
 
 [devscript]
 sync = "git pull origin && uv sync"
+compile_i18n = "pybabel compile -d nuitka_build_config/locale -D nbc"
