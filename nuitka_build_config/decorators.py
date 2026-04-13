@@ -1,8 +1,9 @@
-from .typings import ArgvAddMethod, ArgType, StrList, ArgvAddStrMethod, NullStr
+from typing import Any
+from .typings import ArgvAddMethod, StrList
 
 
 def argv_add(method: ArgvAddMethod) -> ArgvAddMethod:
-    def new_method(self, argv: StrList, arg: ArgType):
+    def new_method(self, argv: StrList, arg: Any) -> StrList:
         data = method(self, argv, arg)
         argv.extend(data)
         return data
