@@ -10,8 +10,8 @@ class IncludesDict(TypedDict, total=False):
     packages: StrList
     modules: StrList
     package_data: StrList
-    files: StrList
-    directories: StrList
+    files: FilesList
+    directories: FilesList
     noinclude_data_files: StrList
 
 # ============ VersionInfo ============
@@ -65,3 +65,5 @@ class NuitkaConfigDict(TypedDict, total=False):
     extra_flags: StrList
     version_info: VersionInfoDict
     verbosity: Verbosity
+    pre_compile_actions: StrList
+    post_compile_actions: StrList

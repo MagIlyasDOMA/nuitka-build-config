@@ -15,8 +15,8 @@ class Includes(BaseModel):
                              description=gettext("List of modules to include in the build (--include-module)"))
     package_data: StrList = Field(default_factory=list,
                                   description=gettext("Packages whose data files should be included (--include-package-data)"))
-    files: StrList = Field(default_factory=list, description=gettext("File patterns to include (--include-data-files)"))
-    directories: StrList = Field(default_factory=list,
+    files: FilesList = Field(default_factory=list, description=gettext("File patterns to include (--include-data-files)"))
+    directories: FilesList = Field(default_factory=list,
                                  description=gettext("Data directories to include (--include-data-dir)"))
     noinclude_data_files: StrList = Field(default_factory=list,
                                           description=gettext("File patterns to exclude from data (--noinclude-data-files)"))
@@ -145,6 +145,16 @@ class NuitkaConfig(BaseModel):
     verbosity: Verbosity = Field(
         default='info',
         description=gettext("Console output verbosity level: info (default), quiet, verbose")
+    )
+
+    pre_compile_actions: StrList = Field(
+        default_factory=list,
+        description=gettext("Commands executed before compilation")
+    )
+
+    post_compile_actions: StrList = Field(
+        default_factory=list,
+        description=gettext("Commands executed after compilation")
     )
 
     model_config = dict(

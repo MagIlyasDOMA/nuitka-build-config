@@ -4,11 +4,10 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.13"
 dependencies = [
-    "hrenpack>=3.0.0b5",
     "locale-plus>=0.1.2",
-    "nuitka>=4.0.5",
+    "nuitka>=4",
     "pathlike-typing>=1.0.0",
-    "pydantic>=2.12.5",
+    "pydantic>=2",
     "pyyaml>=6.0.3",
     "ruamel-yaml>=0.19.1",
 ]

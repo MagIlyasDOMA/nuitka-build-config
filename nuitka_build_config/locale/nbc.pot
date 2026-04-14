@@ -1,3 +1,4 @@
+
 msgid ""
 msgstr ""
 "Project-Id-Version: Nuitka Build Config\n"
@@ -11,47 +12,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: models/__init__.py:11
+#: nuitka_build_config/models/__init__.py:13
 msgid "List of packages to include in the build (--include-package)"
 msgstr ""
 
-#: models/__init__.py:13
+#: nuitka_build_config/models/__init__.py:15
 msgid "List of modules to include in the build (--include-module)"
 msgstr ""
 
-#: models/__init__.py:15
+#: nuitka_build_config/models/__init__.py:17
 msgid "Packages whose data files should be included (--include-package-data)"
 msgstr ""
 
-#: models/__init__.py:16
+#: nuitka_build_config/models/__init__.py:18
 msgid "File patterns to include (--include-data-files)"
 msgstr ""
 
-#: models/__init__.py:18
+#: nuitka_build_config/models/__init__.py:20
 msgid "Data directories to include (--include-data-dir)"
 msgstr ""
 
-#: models/__init__.py:20
+#: nuitka_build_config/models/__init__.py:22
 msgid "File patterns to exclude from data (--noinclude-data-files)"
 msgstr ""
 
-#: models/__init__.py:24
+#: nuitka_build_config/models/__init__.py:26
 msgid "Company name in version info (--company-name)"
 msgstr ""
 
-#: models/__init__.py:25
+#: nuitka_build_config/models/__init__.py:27
 msgid "Product name in version info (--product-name)"
 msgstr ""
 
-#: models/__init__.py:26
+#: nuitka_build_config/models/__init__.py:28
 msgid "File version in X.X.X.X format (--file-version)"
 msgstr ""
 
-#: models/__init__.py:27
+#: nuitka_build_config/models/__init__.py:29
 msgid "Copyright text (--copyright)"
 msgstr ""
 
-#: models/__init__.py:33
+#: nuitka_build_config/models/__init__.py:35
 msgid ""
 "Compilation mode: 'accelerated' (with Python dependency), 'standalone' "
 "(folder with exe), 'onefile' (single exe), 'module' (extension module), "
@@ -59,144 +60,152 @@ msgid ""
 "with .app), 'package' (package as module), 'dll' (experimental)"
 msgstr ""
 
-#: models/__init__.py:40
+#: nuitka_build_config/models/__init__.py:42
 msgid "Run the compiled binary immediately after compilation (--run)"
 msgstr ""
 
-#: models/__init__.py:45
+#: nuitka_build_config/models/__init__.py:47
 msgid "Settings for including additional modules, packages and data files"
 msgstr ""
 
-#: models/__init__.py:50
+#: nuitka_build_config/models/__init__.py:52
 msgid ""
 "Follow all imported modules. In standalone mode defaults to True "
 "(--follow-imports)"
 msgstr ""
 
-#: models/__init__.py:55
+#: nuitka_build_config/models/__init__.py:57
 msgid ""
 "Follow into the specified modules/packages (--follow-import-to). Example:"
 " 'requests', 'numpy'"
 msgstr ""
 
-#: models/__init__.py:60
+#: nuitka_build_config/models/__init__.py:62
 msgid ""
 "DO NOT follow into the specified modules/packages. Supports patterns, "
 "e.g. '*.tests' (--nofollow-import-to)"
 msgstr ""
 
-#: models/__init__.py:65
+#: nuitka_build_config/models/__init__.py:67
 msgid ""
 "List of plugins to enable (--enable-plugins). Example: 'tk-inter', 'anti-"
 "bloat'"
 msgstr ""
 
-#: models/__init__.py:70
+#: nuitka_build_config/models/__init__.py:72
 msgid "List of plugins to disable (--disable-plugins)"
 msgstr ""
 
-#: models/__init__.py:75
+#: nuitka_build_config/models/__init__.py:77
 msgid "Main file to compile (alternative to positional argument --main)"
 msgstr ""
 
-#: models/__init__.py:80
+#: nuitka_build_config/models/__init__.py:82
 msgid ""
 "Follow into standard library modules. Increases compilation time "
 "(--follow-stdlib)"
 msgstr ""
 
-#: models/__init__.py:85
+#: nuitka_build_config/models/__init__.py:87
 msgid "Windows parameters: console mode, UAC, icon, etc."
 msgstr ""
 
-#: models/__init__.py:90
+#: nuitka_build_config/models/__init__.py:92
 msgid "macOS parameters: .app bundle creation, signing, version, etc."
 msgstr ""
 
-#: models/__init__.py:95
+#: nuitka_build_config/models/__init__.py:97
 msgid "Linux parameters: icon and other settings"
 msgstr ""
 
-#: models/__init__.py:100
+#: nuitka_build_config/models/__init__.py:102
 msgid ""
 "Python flags: '-S' (no_site), '-O' (no_asserts), 'no_warnings', "
 "'no_docstrings', '-u' (unbuffered)"
 msgstr ""
 
-#: models/__init__.py:105
+#: nuitka_build_config/models/__init__.py:107
 msgid ""
 "Number of parallel compilation jobs. Negative values = CPU cores minus "
 "value (--jobs)"
 msgstr ""
 
-#: models/__init__.py:110
+#: nuitka_build_config/models/__init__.py:112
 msgid "Enable debug mode: self-checks, additional checks (--debug)"
 msgstr ""
 
-#: models/__init__.py:115
+#: nuitka_build_config/models/__init__.py:117
 msgid "Create an XML compilation report (--report)"
 msgstr ""
 
-#: models/__init__.py:120
+#: nuitka_build_config/models/__init__.py:122
 msgid "Directory for output files (build, dist, binaries) (--output-dir)"
 msgstr ""
 
-#: models/__init__.py:125
+#: nuitka_build_config/models/__init__.py:127
 msgid ""
 "Name of the output executable. For onefile may include path (--output-"
 "filename)"
 msgstr ""
 
-#: models/__init__.py:130
+#: nuitka_build_config/models/__init__.py:132
 msgid "Remove the build directory after creating the binary (--remove-output)"
 msgstr ""
 
-#: models/__init__.py:135
+#: nuitka_build_config/models/__init__.py:137
 msgid "Additional Nuitka command line flags not described in this model"
 msgstr ""
 
-#: models/__init__.py:140
+#: nuitka_build_config/models/__init__.py:142
 msgid ""
 "Version info for Windows/macOS: company name, product name, file version,"
 " copyright"
 msgstr ""
 
-#: models/osparams.py:13
+#: nuitka_build_config/models/__init__.py:147
+msgid "Console output verbosity level: info (default), quiet, verbose"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:152
+msgid "Commands executed before compilation"
+msgstr ""
+
+#: nuitka_build_config/models/__init__.py:157
+msgid "Commands executed after compilation"
+msgstr ""
+
+#: nuitka_build_config/models/osparams.py:13
 msgid ""
 "Path to icon file. On Windows: --windows-icon-from-ico, on macOS: "
 "--macos-app-icon, on Linux: --linux-icon"
 msgstr ""
 
-#: models/osparams.py:20
+#: nuitka_build_config/models/osparams.py:20
 msgid ""
 "Windows console mode: 'force' - create a console window (if not started "
 "from console), 'disable' - do not create a console (--windows-console-"
 "mode)"
 msgstr ""
 
-#: models/osparams.py:26
+#: nuitka_build_config/models/osparams.py:26
 msgid "Request administrator privileges via UAC on launch (--windows-uac-admin)"
 msgstr ""
 
-#: models/osparams.py:31
+#: nuitka_build_config/models/osparams.py:31
 msgid ""
 "Request UAC to launch only from specific folders and remote access "
 "(--windows-uac-uiaccess)"
 msgstr ""
 
-#: models/osparams.py:38
+#: nuitka_build_config/models/osparams.py:38
 msgid ""
 "Create a .app bundle instead of a regular binary. Enables standalone mode"
 " (--macos-create-app-bundle)"
 msgstr ""
 
-#: models/osparams.py:43
+#: nuitka_build_config/models/osparams.py:43
 msgid ""
 "Application name for macOS signing in 'com.YourCompany.AppName' format. "
 "Globally unique identifier for accessing protected APIs (--macos-signed-"
 "app-name)"
-msgstr ""
-
-#: models/osparams.py:147
-msgid "Console output verbosity level: info (default), quiet, verbose"
 msgstr ""

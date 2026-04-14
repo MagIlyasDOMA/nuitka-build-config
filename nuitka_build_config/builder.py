@@ -2,7 +2,6 @@ import platform, sys, subprocess, shlex
 from pathlib import Path
 from typing import Optional, Set
 from pathlike_typing import PathLike
-from hrenpack.descriptors import CachedProperty, UncacheProperty
 from .decorators import argv_add
 from .models import NuitkaConfig
 from .typings import *
@@ -12,11 +11,13 @@ __all__ = ['NuitkaBuilder']
 
 
 class NuitkaBuilder:
-    config_path: Path = UncacheProperty('config', 'argv', 'command')
-    main: Path = UncacheProperty('config', 'argv', 'command')
-
-    def __init__(self, config_path: PathLike = 'nbc-config.yaml'):
+    def __init__(self, config_path: PathLike = 'nbc-config.yaml', main: NullPathLike = None):
         self.config_path = Path(config_path)
+        self.main = main
+
+    def _parse_include_file(self, file: FileType) -> str:
+        if isinstance(file, PathLike): return str(file)
+        return '='.join(file)
 
     @argv_add
     def _add_type(self, argv: StrList, arg: str) -> StrList: return [f'--mode={arg}']
@@ -30,8 +31,8 @@ class NuitkaBuilder:
         output.extend([f'--include-package={package}' for package in arg['packages']])
         output.extend([f'--include-module={module}' for module in arg['modules']])
         output.extend([f'--include-package-data={package}'] for package in arg['package_data'])
-        output.extend([f'--include-data-files={file}' for file in arg['files']])
-        output.extend([f'--include-data-dir={directory}' for directory in arg['directories']])
+        output.extend([f'--include-data-files={self._parse_include_file(file)}' for file in arg['files']])
+        output.extend([f'--include-data-dir={self._parse_include_file(directory)}' for directory in arg['directories']])
         output.extend([f'--noinclude-data-files={pattern}' for pattern in arg['noinclude_data_files']])
         return output
 
@@ -59,8 +60,8 @@ class NuitkaBuilder:
 
     @argv_add
     def _add_main(self, argv: StrList, arg: NullPathLike) -> StrList:
-        # TODO: Implement exception handling and self.main support
-        return [f'--main={arg}']
+        main = arg or self.main
+        return [f'--main={main}'] if main is None else []
 
     @argv_add
     def _add_follow_stdlib(self, argv: StrList, arg: bool) -> StrList:
@@ -157,11 +158,11 @@ class NuitkaBuilder:
     def _get_argv_add_method(cls, attr_name: str) -> ArgvAddMethod:
         return getattr(cls, cls._get_argv_add_method_name(attr_name))
 
-    @CachedProperty
+    @property
     def config(self) -> NuitkaConfigDict:
         return NuitkaConfig.from_yaml_file(self.config_path).to_dict()
 
-    @CachedProperty
+    @property
     def argv(self) -> StrList:
         argv = [sys.executable, '-m', 'nuitka']
         config: NuitkaConfigDict = self.config
@@ -169,7 +170,7 @@ class NuitkaBuilder:
             self._get_argv_add_method(key)(self, argv, value)
         return argv
 
-    @CachedProperty
+    @property
     def command(self) -> str:
         # TODO: Implement proper quoting of arguments
         argv = self.argv
