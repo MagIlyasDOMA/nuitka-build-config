@@ -15,7 +15,8 @@ class NuitkaBuilder:
         self.config_path = Path(config_path)
         self.main = main
 
-    def _parse_include_file(self, file: FileType) -> str:
+    @staticmethod
+    def _parse_include_file(file: FileType) -> str:
         if isinstance(file, PathLike): return str(file)
         return '='.join(file)
 
