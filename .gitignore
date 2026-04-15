@@ -4,5 +4,5 @@ nbc-config.yaml
 structure.txt
 test.py
 *.pyc
-nuitka_build_config/descriptors.py
 /pydantic2typedict.py
+nuitka_build_config/models/__init__.new.py
