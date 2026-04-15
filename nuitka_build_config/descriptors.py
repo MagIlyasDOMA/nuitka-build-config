@@ -9,7 +9,8 @@ class ArgvAddMethod:
 
     def __init__(self, field_type: FieldType = 'str', field_name: NullStr = None,
                  cli: bool = True, flag: NullStr = None, prefix: str = '_add_',
-                 type_data: Optional[Union[dict]] = None, choices: Optional[StrList] = None):
+                 type_data: Optional[Union[dict]] = None, choices: Optional[StrList] = None,
+                 none_is_empty: bool = True):
         self.field_type = field_type
         self.field_name = field_name or self.__name__.lstrip(prefix)
         self.cli = cli
@@ -18,10 +19,12 @@ class ArgvAddMethod:
         self.choices = choices or []
         if field_type == 'choice': self.choices.extend(type_data.keys())
         self._custom = lambda argv, arg: []
+        self.none_is_empty = none_is_empty
 
     def __call__(self, argv: StrList, arg: Any) -> StrList:
+        if arg is None and self.none_is_empty: return []
         match self.field_type:
-            case 'str': return [f'{self.flag}={arg}']
+            case 'str' | 'pathlike' : return [f'{self.flag}={arg}']
             case 'int':
                 if not isinstance(arg, int):
                     raise TypeError("Argument must be an integer")
@@ -32,6 +35,7 @@ class ArgvAddMethod:
                 return [self.type_data[str(bool(arg)).lower()]]
             case 'choice': return self.type_data[arg]
             case 'strlist' | 'filelist': return [f'{self.flag}={el}' for el in arg]
+            case 'nullstr' | 'nullpathlike': return [f'{self.flag}={arg}'] if arg is not None else []
             case 'custom': return self._custom(argv, arg)
         return []
 

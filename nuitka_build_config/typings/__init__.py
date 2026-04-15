@@ -18,7 +18,7 @@ FilesList = List[FileType]
 
 ArgvAddMethod = Callable[[Self, StrList, Any], StrList]
 
-FieldType = Literal['str', 'int', 'bool', 'choice', 'ternary', 'strlist', 'filelist', 'custom']
+FieldType = Literal['str', 'int', 'bool', 'choice', 'ternary', 'strlist', 'filelist', 'custom', 'pathlike']
 
 class TrueFalseDict(TypedDict):
     true: str

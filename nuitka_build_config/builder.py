@@ -21,6 +21,13 @@ class NuitkaBuilder:
     _add_nofollow_import_to = ArgvAddMethod()
     _add_plugins = ArgvAddMethod('strlist')
     _add_disable_plugins = ArgvAddMethod('strlist')
+    _add_follow_stdlib = ArgvAddMethod('bool')
+    _add_jobs = ArgvAddMethod('int')
+    _add_debug = ArgvAddMethod('bool')
+    _add_report = ArgvAddMethod('pathlike')
+    _add_output_dir = ArgvAddMethod('pathlike')
+    _add_output_name = ArgvAddMethod('str')
+    _add_remove_output = ArgvAddMethod('bool')
 
     def __init__(self, config_path: PathLike = 'nbc-config.yaml', main: NullPathLike = None):
         self.config_path = Path(config_path)
@@ -42,16 +49,12 @@ class NuitkaBuilder:
         output.extend([f'--noinclude-data-files={pattern}' for pattern in arg['noinclude_data_files']])
         return output
 
-    @argv_add
+    @ArgvAddMethod.custom_getter()
     def _add_main(self, argv: StrList, arg: NullPathLike) -> StrList:
         main = arg or self.main
         return [f'--main={main}'] if main is None else []
 
-    @argv_add
-    def _add_follow_stdlib(self, argv: StrList, arg: bool) -> StrList:
-        return ['--follow-stdlib'] if arg else []
-
-    @argv_add
+    @ArgvAddMethod.custom_getter()
     def _add_windows_params(self, argv: StrList, arg: WindowsParamsDict) -> StrList:
         output = list()
         if platform.system() == 'Windows':
@@ -65,7 +68,7 @@ class NuitkaBuilder:
             if arg['uac_uiaccess']: output.append('--windows-uac-access')
         return output
 
-    @argv_add
+    @ArgvAddMethod.custom_getter()
     def _add_macos_params(self, argv: StrList, arg: MacOSParamsDict) -> StrList:
         output = list()
         if platform.system() == 'Darwin':
@@ -76,7 +79,7 @@ class NuitkaBuilder:
             if signed_app_name: output.append(f'--macos-signed-app-name={signed_app_name}')
         return output
 
-    @argv_add
+    @ArgvAddMethod.custom_getter()
     def _add_linux_params(self, argv: StrList, arg: LinuxParamsDict) -> StrList:
         output = list()
         if platform.system() == 'Linux':
@@ -84,35 +87,11 @@ class NuitkaBuilder:
             if icon: output.append(f'--linux-icon={icon}')
         return output
 
-    @argv_add
+    @ArgvAddMethod.custom_getter()
     def _add_python_flags(self, argv: StrList, arg: Set[PythonFlagType]) -> StrList:
         return [f'--python-flag={flag}' for flag in arg]
 
-    @argv_add
-    def _add_jobs(self, argv: StrList, arg: Optional[int]) -> StrList:
-        return [f'--jobs={arg}'] if arg else []
-
-    @argv_add
-    def _add_debug(self, argv: StrList, arg: bool) -> StrList:
-        return ['--debug'] if arg else []
-
-    @argv_add
-    def _add_report(self, argv: StrList, arg: NullPathLike) -> StrList:
-        return ['--report'] if arg else []
-
-    @argv_add
-    def _add_output_dir(self, argv: StrList, arg: NullPathLike) -> StrList:
-        return [f'--output-dir={arg}'] if arg else []
-
-    @argv_add
-    def _add_output_name(self, argv: StrList, arg: str) -> StrList:
-        return [f'--output-name={arg}'] if arg else []
-
-    @argv_add
-    def _add_remove_output(self, argv: StrList, arg: bool) -> StrList:
-        return ['--remove-output'] if arg else []
-
-    @argv_add
+    @ArgvAddMethod.custom_getter()
     def _add_verbosity(self, argv: StrList, arg: Verbosity) -> StrList:
         match arg:
             case 'info': return []
@@ -120,10 +99,10 @@ class NuitkaBuilder:
             case 'verbose': return ['--verbose']
             case _: raise KeyError(arg)
 
-    @argv_add
+    @ArgvAddMethod.custom_getter()
     def _add_extra_flags(self, argv: StrList, arg: StrList) -> StrList: return arg
 
-    @argv_add
+    @ArgvAddMethod.custom_getter()
     def _add_version_info(self, argv: StrList, arg: VersionInfoDict) -> StrList:
         output = list()
         for key in VersionInfoDict.__annotations__.keys():
