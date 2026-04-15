@@ -1,7 +1,7 @@
 from typing import Literal, Optional, List, Callable, Self, Any, Tuple, Union, TypedDict, Dict
 from pathlike_typing import PathLike
 
-__all__ = ['BinFileType', 'PythonFlagType', 'NullStr', 'StrList', 'ArgvAddMethod',
+__all__ = ['BinFileType', 'PythonFlagType', 'NullStr', 'StrList',
            'NullPathLike', 'Verbosity', 'FilePathAndName', 'FileType', 'FilesList',
            'FieldType', 'TrueFalseDict', 'FieldTypeData',]
 
@@ -18,7 +18,7 @@ FilesList = List[FileType]
 
 ArgvAddMethod = Callable[[Self, StrList, Any], StrList]
 
-FieldType = Literal['str', 'int', 'bool', 'choice', 'ternary', 'StrList', 'FileList', 'custom']
+FieldType = Literal['str', 'int', 'bool', 'choice', 'ternary', 'strlist', 'filelist', 'custom']
 
 class TrueFalseDict(TypedDict):
     true: str

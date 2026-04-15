@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Optional, Set
 from pathlike_typing import PathLike
 from .decorators import argv_add
+from .descriptors import ArgvAddMethod
 from .models import NuitkaConfig
 from .typings import *
 from .typings.models import *
@@ -11,6 +12,16 @@ __all__ = ['NuitkaBuilder']
 
 
 class NuitkaBuilder:
+    _add_type = ArgvAddMethod(flag='--mode')
+    _add_run = ArgvAddMethod('bool')
+    _add_follow_imports = ArgvAddMethod('ternary',
+                                        type_data={'true': '--follow-imports',
+                                                   'false': '--nofollow-imports'})
+    _add_follow_import_to = ArgvAddMethod()
+    _add_nofollow_import_to = ArgvAddMethod()
+    _add_plugins = ArgvAddMethod('strlist')
+    _add_disable_plugins = ArgvAddMethod('strlist')
+
     def __init__(self, config_path: PathLike = 'nbc-config.yaml', main: NullPathLike = None):
         self.config_path = Path(config_path)
         self.main = main
@@ -20,13 +31,7 @@ class NuitkaBuilder:
         if isinstance(file, PathLike): return str(file)
         return '='.join(file)
 
-    @argv_add
-    def _add_type(self, argv: StrList, arg: str) -> StrList: return [f'--mode={arg}']
-
-    @argv_add
-    def _add_run(self, argv: StrList, arg: bool) -> StrList: return ['--run'] if arg else []
-
-    @argv_add
+    @ArgvAddMethod.custom_getter()
     def _add_include(self, argv: StrList, arg: IncludesDict) -> StrList:
         output = list()
         output.extend([f'--include-package={package}' for package in arg['packages']])
@@ -36,28 +41,6 @@ class NuitkaBuilder:
         output.extend([f'--include-data-dir={self._parse_include_file(directory)}' for directory in arg['directories']])
         output.extend([f'--noinclude-data-files={pattern}' for pattern in arg['noinclude_data_files']])
         return output
-
-    @argv_add
-    def _add_follow_imports(self, argv: StrList, arg: Optional[bool]) -> StrList:
-        if arg is None: return []
-        elif arg: return ['--follow-imports']
-        else: return ['--nofollow-imports']
-
-    @argv_add
-    def _add_follow_import_to(self, argv: StrList, arg: str) -> StrList:
-        return [f'--follow-import-to={arg}']
-
-    @argv_add
-    def _add_nofollow_import_to(self, argv: StrList, arg: str) -> StrList:
-        return [f'--nofollow-import-to={arg}']
-
-    @argv_add
-    def _add_plugins(self, argv: StrList, arg: StrList) -> StrList:
-        return [f'--enable-plugins={plugin}' for plugin in arg]
-
-    @argv_add
-    def _add_disable_plugins(self, argv: StrList, arg: StrList) -> StrList:
-        return [f'--disable-plugins={plugin}' for plugin in arg]
 
     @argv_add
     def _add_main(self, argv: StrList, arg: NullPathLike) -> StrList:
