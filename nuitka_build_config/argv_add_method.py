@@ -2,6 +2,8 @@ import functools
 from typing import Any, Optional, Union
 from .typings import *
 
+__all__ = ['ArgvAddMethod']
+
 
 class ArgvAddMethod:
     def __set_name__(self, owner, name: str):
@@ -18,10 +20,10 @@ class ArgvAddMethod:
         self.type_data = type_data
         self.choices = choices or []
         if field_type == 'choice': self.choices.extend(type_data.keys())
-        self._custom = lambda argv, arg: []
+        self._custom = lambda instance, argv, arg: []
         self.none_is_empty = none_is_empty
 
-    def __call__(self, argv: StrList, arg: Any) -> StrList:
+    def __call__(self, instance, argv: StrList, arg: Any) -> StrList:
         if arg is None and self.none_is_empty: return []
         match self.field_type:
             case 'str' | 'pathlike' : return [f'{self.flag}={arg}']
@@ -35,8 +37,7 @@ class ArgvAddMethod:
                 return [self.type_data[str(bool(arg)).lower()]]
             case 'choice': return self.type_data[arg]
             case 'strlist' | 'filelist': return [f'{self.flag}={el}' for el in arg]
-            case 'nullstr' | 'nullpathlike': return [f'{self.flag}={arg}'] if arg is not None else []
-            case 'custom': return self._custom(argv, arg)
+            case 'custom': return self._custom(instance, argv, arg)
         return []
 
     @classmethod

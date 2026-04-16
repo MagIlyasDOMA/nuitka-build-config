@@ -12,6 +12,18 @@ wheels = [
 ]
 
 [[package]]
+name = "argparse-typing"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9b/bf/e32c40d028178e93ff7486f734ce2bcec114a0e79524d6e1912d2125111e/argparse_typing-0.2.0.tar.gz", hash = "sha256:9a633486237bd42461a254008e5413aec8ae95c0219823fc379a2343f10fa9bf", size = 13068, upload-time = "2026-02-18T09:44:50.173Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c3/0f/c913dd2902c98e5dd0e9bfb78e39dc47ae591418844cbc5cb19a7abfe10a/argparse_typing-0.2.0-py3-none-any.whl", hash = "sha256:2863bea797edde60fd1469710cfc8fdd534d0426d57ae199774549727b3326c8", size = 13572, upload-time = "2026-02-18T09:44:48.754Z" },
+]
+
+[[package]]
 name = "babel"
 version = "2.18.0"
 source = { registry = "https://pypi.org/simple" }
@@ -65,6 +77,7 @@ name = "nuitka-build-config"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "argparse-typing" },
     { name = "locale-plus" },
     { name = "nuitka" },
     { name = "pathlike-typing" },
@@ -81,6 +94,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "argparse-typing", specifier = ">=0.2.0" },
     { name = "locale-plus", specifier = ">=0.1.2" },
     { name = "nuitka", specifier = ">=4" },
     { name = "pathlike-typing", specifier = ">=1.0.0" },

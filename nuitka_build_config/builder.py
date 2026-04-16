@@ -1,9 +1,8 @@
 import platform, sys, subprocess, shlex
 from pathlib import Path
-from typing import Optional, Set
+from typing import Optional, Set, List
 from pathlike_typing import PathLike
-from .decorators import argv_add
-from .descriptors import ArgvAddMethod
+from .argv_add_method import ArgvAddMethod
 from .models import NuitkaConfig
 from .typings import *
 from .typings.models import *
@@ -143,3 +142,11 @@ class NuitkaBuilder:
     def run(self, config_path: Optional[PathLike] = None) -> subprocess.CompletedProcess:
         if config_path is not None: self.config_path = config_path
         return subprocess.run(self.argv, text=True)
+
+    @classmethod
+    def add_argv_methods(cls) -> List[ArgvAddMethod]:
+        output = list()
+        for attr in dir(cls):
+            value = getattr(cls, attr)
+            if isinstance(value, ArgvAddMethod): output.append(value)
+        return output

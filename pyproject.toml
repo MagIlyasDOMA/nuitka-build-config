@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.13"
 dependencies = [
+    "argparse-typing>=0.2.0",
     "locale-plus>=0.1.2",
     "nuitka>=4",
     "pathlike-typing>=1.0.0",
