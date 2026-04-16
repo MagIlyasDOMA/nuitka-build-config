@@ -1,38 +1,52 @@
 import argparse
-from typing import Callable, Any, Union
 from pathlib import Path
-from .argv_add_method import ArgvAddMethod
-from .builder import NuitkaBuilder
-from .typings import FieldType
 
 
 class NuitkaParser(argparse.ArgumentParser):
     groups: dict
 
-    def add_arguments(self):
-        for method in NuitkaBuilder.add_argv_methods():
-            if method.field_type == 'custom': continue
-            elif method.field_type == 'choice':
-                group = self.add_mutually_exclusive_group()
-                self.groups[method.field_name] = group
-                for value, flag in method.type_data.items():
-                    group.add_argument(flag, action='store_const', const=value,
-                                       dest=method.field_name)
-            elif method.field_type == 'ternary':
-                group = self.add_mutually_exclusive_group()
-                self.groups[method.field_name] = group
-                group.add_argument(method.type_data['true'], action='store_const', const=True,
-                                   dest=method.field_name)
-                group.add_argument(method.type_data['false'], action='store_const', const=False,
-                                   dest=method.field_name)
-            else:
-                data = dict(dest=method.field_name)
-                match method.field_type:
-                    case 'str': data['type'] = str
-                    case 'int': data['type'] = int
-                    case 'bool': data['action'] = 'store_true'
-                    case 'pathlike': data['type'] = Path
-                    case 'strlist': data.update(action='append', type=str)
-                    case 'filelist': data.update(action='append', type=Path)
-                self.add_argument(method.flag, **data)
+    def _add_config_root_arguments(self):
+        self.add_argument('--mode', dest='type')
+        self.add_argument('--run')
+
+        follow_imports_group = self.add_mutually_exclusive_group()
+        self.groups['follow_imports'] = follow_imports_group
+        follow_imports_group.add_argument('--follow-imports', action='store_const', const=True,
+                                          dest='follow_imports')
+        follow_imports_group.add_argument('--nofollow-imports', action='store_const', const=False,
+                                          dest='follow_imports')
+
+        self.add_argument('--follow-import-to', action='append')
+        self.add_argument('--nofollow-import-to', action='append')
+        self.add_argument('--enable-plugins', action='append', dest='plugins')
+        self.add_argument('--disable-plugins', action='append')
+        self.add_argument('--main', type=Path)
+        self.add_argument('--python-flag', action='append', dest='python_flags')
+        self.add_argument('--jobs', type=int)
+        self.add_argument('--debug', action='store_true')
+        self.add_argument('--report', type=Path)
+        self.add_argument('--output-dir', type=Path)
+        self.add_argument('--output-name')
+
+        verbosity_group = self.add_mutually_exclusive_group()
+        self.groups['verbosity'] = verbosity_group
+        verbosity_group.add_argument('--verbose', action='store_const', const='verbose',
+                                     dest='verbosity')
+        verbosity_group.add_argument('--quiet', action='store_const', const='quiet',
+                                     dest='verbosity')
+
+    def _add_includes_arguments(self):
+        raise NotImplementedError
+
+    def _add_windows_arguments(self):
+        raise NotImplementedError
+
+    def _add_macos_arguments(self):
+        raise NotImplementedError
+
+    def _add_linux_arguments(self):
+        raise NotImplementedError
+
+    def _add_version_info_arguments(self):
+        raise NotImplementedError
 

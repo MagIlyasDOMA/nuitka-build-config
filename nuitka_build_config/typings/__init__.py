@@ -3,7 +3,7 @@ from pathlike_typing import PathLike
 
 __all__ = ['BinFileType', 'PythonFlagType', 'NullStr', 'StrList',
            'NullPathLike', 'Verbosity', 'FilePathAndName', 'FileType', 'FilesList',
-           'FieldType', 'TrueFalseDict', 'FieldTypeData',]
+           'FieldType', 'TrueFalseDict', 'FieldTypeData', 'ArgvAddFunc']
 
 BinFileType = Literal['accelerated', 'onefile', 'standalone', 'module', 'app', 'app-dist', 'package', 'dll']
 PythonFlagType = Literal['-S', 'no_site', '-O', 'no_asserts', 'no_warnings', 'no_docstrings', '-u', 'unbuffered']
@@ -16,7 +16,7 @@ FilePathAndName = Tuple[PathLike, str]
 FileType = Union[PathLike, FilePathAndName]
 FilesList = List[FileType]
 
-ArgvAddMethod = Callable[[Self, StrList, Any], StrList]
+ArgvAddFunc = Callable[[Self, StrList, Any], StrList]
 
 FieldType = Literal['str', 'int', 'bool', 'choice', 'ternary', 'strlist', 'filelist', 'custom', 'pathlike']
 
