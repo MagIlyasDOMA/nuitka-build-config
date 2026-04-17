@@ -1,13 +1,12 @@
 import platform
 from pathlib import Path
-from typing import Set, Optional, List
+from typing import Set, Optional
 from pathlike_typing import PathLike
-from ..argv_add_method import ArgvAddMethod
 from ..decorators import argv_add
 from ..typings import *
 from ..typings.models import *
 
-__all__ = ['BaseBuilder', 'ClassMixin', 'DecoratorMixin']
+__all__ = ['BaseBuilder', 'DecoratorMixin']
 
 
 class BaseBuilder:
@@ -19,120 +18,6 @@ class BaseBuilder:
     def _parse_include_file(file: FileType) -> str:
         if isinstance(file, PathLike): return str(file)
         return '='.join(file)
-
-
-class ClassMixin(BaseBuilder):
-    _add_type = ArgvAddMethod(flag='--mode')
-    _add_run = ArgvAddMethod('bool')
-    _add_follow_imports = ArgvAddMethod('ternary',
-                                        type_data={'true': '--follow-imports',
-                                                   'false': '--nofollow-imports'})
-    _add_follow_import_to = ArgvAddMethod()
-    _add_nofollow_import_to = ArgvAddMethod()
-    _add_plugins = ArgvAddMethod('strlist')
-    _add_disable_plugins = ArgvAddMethod('strlist')
-    _add_follow_stdlib = ArgvAddMethod('bool')
-    _add_jobs = ArgvAddMethod('int')
-    _add_debug = ArgvAddMethod('bool')
-    _add_report = ArgvAddMethod('pathlike')
-    _add_output_dir = ArgvAddMethod('pathlike')
-    _add_output_name = ArgvAddMethod('str')
-    _add_remove_output = ArgvAddMethod('bool')
-
-    @staticmethod
-    def _parse_include_file(file: FileType) -> str:
-        if isinstance(file, PathLike): return str(file)
-        return '='.join(file)
-
-    @ArgvAddMethod.custom_getter()
-    def _add_include(self, argv: StrList, arg: IncludesDict) -> StrList:
-        output = list()
-        output.extend([f'--include-package={package}' for package in arg['packages']])
-        output.extend([f'--include-module={module}' for module in arg['modules']])
-        output.extend([f'--include-package-data={package}'] for package in arg['package_data'])
-        output.extend([f'--include-data-files={self._parse_include_file(file)}' for file in arg['files']])
-        output.extend([f'--include-data-dir={self._parse_include_file(directory)}' for directory in arg['directories']])
-        output.extend([f'--noinclude-data-files={pattern}' for pattern in arg['noinclude_data_files']])
-        return output
-
-    @ArgvAddMethod.custom_getter()
-    def _add_main(self, argv: StrList, arg: NullPathLike) -> StrList:
-        main = arg or self.main
-        return [f'--main={main}'] if main is None else []
-
-    @ArgvAddMethod.custom_getter()
-    def _add_windows_params(self, argv: StrList, arg: WindowsParamsDict) -> StrList:
-        output = list()
-        if platform.system() == 'Windows':
-            icon = arg['icon']
-            if icon:
-                option = '--windows-icon-from-exe' if icon.endswith('.exe') \
-                    else '--windows-icon-from-ico'
-                output.append('='.join((option, str(icon))))
-            output.append(f"--windows-console-mode={arg['console_mode']}")
-            if arg['uac_admin']: output.append('--windows-uac-admin')
-            if arg['uac_uiaccess']: output.append('--windows-uac-access')
-        return output
-
-    @ArgvAddMethod.custom_getter()
-    def _add_macos_params(self, argv: StrList, arg: MacOSParamsDict) -> StrList:
-        output = list()
-        if platform.system() == 'Darwin':
-            icon = arg['icon']
-            if icon: output.append(f'--macos-app-icon={icon}')
-            if arg['create_app_bundle']: output.append('--macos-create-app-bundle')
-            signed_app_name = arg['signed_app_name']
-            if signed_app_name: output.append(f'--macos-signed-app-name={signed_app_name}')
-        return output
-
-    @ArgvAddMethod.custom_getter()
-    def _add_linux_params(self, argv: StrList, arg: LinuxParamsDict) -> StrList:
-        output = list()
-        if platform.system() == 'Linux':
-            icon = arg['icon']
-            if icon: output.append(f'--linux-icon={icon}')
-        return output
-
-    @ArgvAddMethod.custom_getter()
-    def _add_python_flags(self, argv: StrList, arg: Set[PythonFlagType]) -> StrList:
-        return [f'--python-flag={flag}' for flag in arg]
-
-    @ArgvAddMethod.custom_getter()
-    def _add_verbosity(self, argv: StrList, arg: Verbosity) -> StrList:
-        match arg:
-            case 'info':
-                return []
-            case 'quiet':
-                return ['--quiet']
-            case 'verbose':
-                return ['--verbose']
-            case _:
-                raise KeyError(arg)
-
-    @ArgvAddMethod.custom_getter()
-    def _add_extra_flags(self, argv: StrList, arg: StrList) -> StrList:
-        return arg
-
-    @ArgvAddMethod.custom_getter()
-    def _add_version_info(self, argv: StrList, arg: VersionInfoDict) -> StrList:
-        output = list()
-        for key in VersionInfoDict.__annotations__.keys():
-            match key:
-                case 'copyright_text':
-                    option_name = '--copyright'
-                case _:
-                    option_name = f"--{key.replace('_', '-')}"
-            value = arg[key]  # type: ignore
-            if value: output.append(f'{option_name}={value}')
-        return output
-
-    @classmethod
-    def add_argv_methods(cls) -> List[ArgvAddMethod]:
-        output = list()
-        for attr in dir(cls):
-            value = getattr(cls, attr)
-            if isinstance(value, ArgvAddMethod): output.append(value)
-        return output
 
 
 class DecoratorMixin(BaseBuilder):
