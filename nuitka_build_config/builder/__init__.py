@@ -2,7 +2,7 @@ import platform, sys, subprocess, shlex
 from pathlib import Path
 from typing import Optional
 from pathlike_typing import PathLike
-from .. import NuitkaConfig
+from ..models import NuitkaConfig
 from ..typings import *
 from ..typings.models import NuitkaConfigDict
 from .base import DecoratorMixin

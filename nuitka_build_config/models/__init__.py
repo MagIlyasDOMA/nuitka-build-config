@@ -1,5 +1,5 @@
 import yaml
-from typing import Optional, Set, cast
+from typing import Optional, Set
 from pathlike_typing import PathLike
 from pydantic import BaseModel, Field
 from ..i18n import gettext
