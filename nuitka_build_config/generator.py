@@ -13,18 +13,14 @@ class GroupsDictMixin(argparse.ArgumentParser):
         self.groups = dict()
 
     def add_argument_group(
-            self,
-            title=None,
-            description=None,
-            name: str = ...,
-            *,
-            prefix_chars=...,
-            argument_default=...,
-            conflict_handler=...,
+        self,
+        title=None,
+        description=None,
+        name: str = ...,
+        **kwargs
     ) -> argparse._ArgumentGroup:
         group = super().add_argument_group(
-            title, description, prefix_chars=prefix_chars,
-            argument_default=argument_default, conflict_handler=conflict_handler
+            title, description, **kwargs
         )
         self.groups[name] = group
         return group
