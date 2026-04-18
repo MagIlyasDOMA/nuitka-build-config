@@ -1,20 +1,20 @@
 import argparse, yaml
 from dataclasses import dataclass
-from typing import Self
+from typing import Self, Tuple, Dict
 from pathlib import Path
 from .i18n import gettext
 from .models import NuitkaConfig
 from .typings.models import NuitkaConfigDict
 
-__all__ = ['NuitkaParser', 'main']
+__all__ = ['NuitkaParser', 'GeneratorArgs', 'main']
+
+
+@dataclass
+class GeneratorArgs:
+    output_file: str
 
 
 class NuitkaParser(argparse.ArgumentParser):
-    @dataclass
-    class ArgvConfig:
-        nuitka_config: NuitkaConfig
-        output_filename: str
-
     def _add_config_root_arguments(self):
         self.add_argument('--mode', dest='type',
                           help=gettext("Compilation mode: 'accelerated' (with Python dependency), 'standalone' (folder with exe), "
@@ -130,17 +130,20 @@ class NuitkaParser(argparse.ArgumentParser):
                                         help=gettext("Copyright text (--copyright)"))
 
     def _add_actions_arguments(self):
-        actions_group = self.add_argument_group("Actions")
+        actions_group = self.add_argument_group(gettext("Actions"), gettext("Add commands to run before or after compilation"))
         actions_group.add_argument('--add-pre-compile-action', '-b',
                                    dest='pre_compile_actions', help=gettext("Commands executed before compilation"))
         actions_group.add_argument('--add-post-compile-action', '-p',
                                    dest='post_compile_actions', help=gettext("Commands executed after compilation"))
 
     def _add_non_config_arguments(self):
-        non_config_group = self.add_argument_group("Other")
-        non_config_group.add_argument('--output-file', '-o', dest='non_config__output_file')
+        non_config_group = self.add_argument_group(gettext("Non-config arguments"),
+                                                   gettext("Arguments that are not written to the configuration file"))
+        non_config_group.add_argument('--output-file', '-o', default='nbc-config.yaml',
+                                      dest='non_config__output_file', metavar='FILE', help=gettext("Path to output file"))
 
     def add_arguments(self) -> Self:
+        self.add_argument('--version', '-v', action='version', help=gettext("show program's version number and exit"))
         self._add_config_root_arguments()
         self._add_includes_arguments()
         self._add_windows_arguments()
@@ -160,7 +163,7 @@ class NuitkaParser(argparse.ArgumentParser):
         dct['main'] = output
         return output
 
-    def parse_to_dict(self, args=None, add_nones: bool = False) -> NuitkaConfigDict:
+    def parse_to_dicts(self, args=None, add_nones: bool = False) -> Tuple[NuitkaConfigDict, Dict[str, str]]:
         args, extra = self.parse_known_args(args)
         raw_dict = vars(args)
         self._validate_main(raw_dict)
@@ -169,22 +172,25 @@ class NuitkaParser(argparse.ArgumentParser):
         non_config_items = dict()
         for key, value in raw_dict.items():
             if value is None and not add_nones: continue
-            if '__' in key: output[key] = value
+            if '__' not in key: output[key] = value
             else:
                 namespace, key = key.split('__', 1)
                 if namespace == 'non_config': non_config_items[key] = value
                 if namespace not in output: output[namespace] = dict()
                 output[namespace][key] = value
-        return output # type: ignore
+        return output, non_config_items # type: ignore
 
-    def parse_to_object(self, args=None, add_nones: bool = False) -> NuitkaConfig:
-        return NuitkaConfig.model_validate(self.parse_to_dict(args, add_nones))
+    def parse_to_objects(self, args=None, add_nones: bool = False) -> Tuple[NuitkaConfig, GeneratorArgs]:
+        config, non_config_items = self.parse_to_dicts(args, add_nones)
+        return NuitkaConfig.model_validate(config), GeneratorArgs(**non_config_items)
 
 
 def main():
-    parser = NuitkaParser()
+    parser = NuitkaParser(epilog=gettext("Extra arguments are added to extra_flags"))
     parser.add_arguments()
-    args = parser.parse_to_object()
+    configs, non_config = parser.parse_to_objects()
+    with open(non_config.output_file, 'w') as file:
+        yaml.safe_dump(configs.to_dict(), file)
 
 if __name__ == '__main__':
     main()

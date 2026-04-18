@@ -22,4 +22,4 @@ dev = [
 [devscript]
 sync = "git pull origin && uv sync"
 compile_i18n = "pybabel compile -d nuitka_build_config/locale -D nbc"
-generate_i18_pot = "pybabel extract -F ./babel.cfg -o ./nuitka_build_config/locale/nbc.pot ."
+generate_i18n_pot = "pybabel extract -F ./babel.cfg -o ./nuitka_build_config/locale/nbc.pot ."
