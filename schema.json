@@ -1,0 +1,525 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$defs": {
+    "Includes": {
+      "properties": {
+        "packages": {
+          "description": "List of packages to include in the build (--include-package)",
+          "items": {
+            "type": "string"
+          },
+          "title": "Packages",
+          "type": "array"
+        },
+        "modules": {
+          "description": "List of modules to include in the build (--include-module)",
+          "items": {
+            "type": "string"
+          },
+          "title": "Modules",
+          "type": "array"
+        },
+        "package_data": {
+          "description": "Packages whose data files should be included (--include-package-data)",
+          "items": {
+            "type": "string"
+          },
+          "title": "Package Data",
+          "type": "array"
+        },
+        "files": {
+          "description": "File patterns to include (--include-data-files)",
+          "items": {
+            "anyOf": [
+              {
+                "format": "path",
+                "type": "string"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "anyOf": [
+                      {
+                        "format": "path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "type": "array"
+              }
+            ]
+          },
+          "title": "Files",
+          "type": "array"
+        },
+        "directories": {
+          "description": "Data directories to include (--include-data-dir)",
+          "items": {
+            "anyOf": [
+              {
+                "format": "path",
+                "type": "string"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "anyOf": [
+                      {
+                        "format": "path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "type": "array"
+              }
+            ]
+          },
+          "title": "Directories",
+          "type": "array"
+        },
+        "noinclude_data_files": {
+          "description": "File patterns to exclude from data (--noinclude-data-files)",
+          "items": {
+            "type": "string"
+          },
+          "title": "Noinclude Data Files",
+          "type": "array"
+        }
+      },
+      "title": "Includes",
+      "type": "object"
+    },
+    "LinuxParams": {
+      "properties": {
+        "icon": {
+          "anyOf": [
+            {
+              "format": "path",
+              "type": "string"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Path to icon file (--linux-icon)",
+          "title": "Icon"
+        }
+      },
+      "title": "LinuxParams",
+      "type": "object"
+    },
+    "MacOSParams": {
+      "properties": {
+        "icon": {
+          "anyOf": [
+            {
+              "format": "path",
+              "type": "string"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Path to icon file for macOS .app bundle (--macos-app-icon)",
+          "title": "Icon"
+        },
+        "create_app_bundle": {
+          "default": false,
+          "description": "Create a .app bundle instead of a regular binary. Enables standalone mode (--macos-create-app-bundle)",
+          "title": "Create App Bundle",
+          "type": "boolean"
+        },
+        "signed_app_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Application name for macOS signing in 'com.YourCompany.AppName' format. Globally unique identifier for accessing protected APIs (--macos-signed-app-name)",
+          "title": "Signed App Name"
+        }
+      },
+      "title": "MacOSParams",
+      "type": "object"
+    },
+    "VersionInfo": {
+      "properties": {
+        "company_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Company name in version info (--company-name)",
+          "title": "Company Name"
+        },
+        "product_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Product name in version info (--product-name)",
+          "title": "Product Name"
+        },
+        "file_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "File version in X.X.X.X format (--file-version)",
+          "title": "File Version"
+        },
+        "copyright_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Copyright text (--copyright)",
+          "title": "Copyright Text"
+        }
+      },
+      "title": "VersionInfo",
+      "type": "object"
+    },
+    "WindowsParams": {
+      "properties": {
+        "icon": {
+          "anyOf": [
+            {
+              "format": "path",
+              "type": "string"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Path to icon file (--windows-icon-from-ico)",
+          "title": "Icon"
+        },
+        "console_mode": {
+          "default": "force",
+          "description": "Windows console mode: 'force' - create a console window (if not started from console), 'disable' - do not create a console (--windows-console-mode)",
+          "enum": [
+            "disable",
+            "force"
+          ],
+          "title": "Console Mode",
+          "type": "string"
+        },
+        "uac_admin": {
+          "default": false,
+          "description": "Request administrator privileges via UAC on launch (--windows-uac-admin)",
+          "title": "Uac Admin",
+          "type": "boolean"
+        },
+        "uac_uiaccess": {
+          "default": false,
+          "description": "Request UAC to launch only from specific folders and remote access (--windows-uac-uiaccess)",
+          "title": "Uac Uiaccess",
+          "type": "boolean"
+        }
+      },
+      "title": "WindowsParams",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "type": {
+      "default": "accelerated",
+      "description": "Compilation mode: 'accelerated' (with Python dependency), 'standalone' (folder with exe), 'onefile' (single exe), 'module' (extension module), 'app' (onefile for macOS with .app), 'app-dist' (standalone for macOS with .app), 'package' (package as module), 'dll' (experimental)",
+      "enum": [
+        "accelerated",
+        "onefile",
+        "standalone",
+        "module",
+        "app",
+        "app-dist",
+        "package",
+        "dll"
+      ],
+      "title": "Type",
+      "type": "string"
+    },
+    "run": {
+      "default": false,
+      "description": "Run the compiled binary immediately after compilation (--run)",
+      "title": "Run",
+      "type": "boolean"
+    },
+    "include": {
+      "$ref": "#/$defs/Includes",
+      "description": "Settings for including additional modules, packages and data files"
+    },
+    "follow_imports": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Follow all imported modules. In standalone mode defaults to True (--follow-imports)",
+      "title": "Follow Imports"
+    },
+    "follow_import_to": {
+      "description": "Follow into the specified modules/packages (--follow-import-to). Example: 'requests', 'numpy'",
+      "items": {
+        "type": "string"
+      },
+      "title": "Follow Import To",
+      "type": "array"
+    },
+    "nofollow_import_to": {
+      "description": "DO NOT follow into the specified modules/packages. Supports patterns, e.g. '*.tests' (--nofollow-import-to)",
+      "items": {
+        "type": "string"
+      },
+      "title": "Nofollow Import To",
+      "type": "array"
+    },
+    "plugins": {
+      "description": "List of plugins to enable (--enable-plugins). Example: 'tk-inter', 'anti-bloat'",
+      "items": {
+        "type": "string"
+      },
+      "title": "Plugins",
+      "type": "array"
+    },
+    "disable_plugins": {
+      "description": "List of plugins to disable (--disable-plugins)",
+      "items": {
+        "type": "string"
+      },
+      "title": "Disable Plugins",
+      "type": "array"
+    },
+    "main": {
+      "anyOf": [
+        {
+          "format": "path",
+          "type": "string"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Main file to compile (alternative to positional argument --main)",
+      "title": "Main"
+    },
+    "follow_stdlib": {
+      "default": false,
+      "description": "Follow into standard library modules. Increases compilation time (--follow-stdlib)",
+      "title": "Follow Stdlib",
+      "type": "boolean"
+    },
+    "windows_params": {
+      "$ref": "#/$defs/WindowsParams",
+      "description": "Windows parameters: console mode, UAC, icon, etc."
+    },
+    "macos_params": {
+      "$ref": "#/$defs/MacOSParams",
+      "description": "macOS parameters: .app bundle creation, signing, version, etc."
+    },
+    "linux_params": {
+      "$ref": "#/$defs/LinuxParams",
+      "description": "Linux parameters: icon and other settings"
+    },
+    "python_flags": {
+      "description": "Python flags: '-S' (no_site), '-O' (no_asserts), 'no_warnings', 'no_docstrings', '-u' (unbuffered)",
+      "items": {
+        "enum": [
+          "-S",
+          "no_site",
+          "-O",
+          "no_asserts",
+          "no_warnings",
+          "no_docstrings",
+          "-u",
+          "unbuffered"
+        ],
+        "type": "string"
+      },
+      "title": "Python Flags",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "jobs": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Number of parallel compilation jobs. Negative values = CPU cores minus value (--jobs)",
+      "title": "Jobs"
+    },
+    "debug": {
+      "default": false,
+      "description": "Enable debug mode: self-checks, additional checks (--debug)",
+      "title": "Debug",
+      "type": "boolean"
+    },
+    "report": {
+      "anyOf": [
+        {
+          "format": "path",
+          "type": "string"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Create an XML compilation report (--report)",
+      "title": "Report"
+    },
+    "output_dir": {
+      "anyOf": [
+        {
+          "format": "path",
+          "type": "string"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Directory for output files (build, dist, binaries) (--output-dir)",
+      "title": "Output Dir"
+    },
+    "output_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Name of the output executable. For onefile may include path (--output-filename)",
+      "title": "Output Name"
+    },
+    "remove_output": {
+      "default": false,
+      "description": "Remove the build directory after creating the binary (--remove-output)",
+      "title": "Remove Output",
+      "type": "boolean"
+    },
+    "extra_flags": {
+      "description": "Additional Nuitka command line flags not described in this model",
+      "items": {
+        "type": "string"
+      },
+      "title": "Extra Flags",
+      "type": "array"
+    },
+    "version_info": {
+      "$ref": "#/$defs/VersionInfo",
+      "description": "Version info for Windows/macOS: company name, product name, file version, copyright"
+    },
+    "verbosity": {
+      "default": "info",
+      "description": "Console output verbosity level: info (default), quiet, verbose",
+      "enum": [
+        "quiet",
+        "info",
+        "verbose"
+      ],
+      "title": "Verbosity",
+      "type": "string"
+    },
+    "pre_compile_actions": {
+      "description": "Commands executed before compilation",
+      "items": {
+        "type": "string"
+      },
+      "title": "Pre Compile Actions",
+      "type": "array"
+    },
+    "post_compile_actions": {
+      "description": "Commands executed after compilation",
+      "items": {
+        "type": "string"
+      },
+      "title": "Post Compile Actions",
+      "type": "array"
+    }
+  },
+  "title": "nuitka-build-config",
+  "type": "object"
+}

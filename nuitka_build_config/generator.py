@@ -2,11 +2,12 @@ import argparse, yaml
 from dataclasses import dataclass
 from typing import Self, Tuple, Dict
 from pathlib import Path
+from pathlike_typing import PathLike
 from .i18n import gettext
 from .models import NuitkaConfig
 from .typings.models import NuitkaConfigDict
 
-__all__ = ['NuitkaParser', 'GeneratorArgs', 'main']
+__all__ = ['NuitkaParser', 'GeneratorArgs', 'NuitkaGenerator', 'main']
 
 
 @dataclass
@@ -185,12 +186,23 @@ class NuitkaParser(argparse.ArgumentParser):
         return NuitkaConfig.model_validate(config), GeneratorArgs(**non_config_items)
 
 
+class NuitkaGenerator:
+    @staticmethod
+    def generate_file(config: NuitkaConfig, path: PathLike):
+        with open(path, 'w', encoding='utf-8') as file:
+            file.write("# $schema: https://raw.githubusercontent.com/MagIlyasDOMA/nuitka-build-config/refs/heads/main/schema.json\n\n")
+            yaml.safe_dump(config.to_dict(), file, allow_unicode=True)
+
+    @classmethod
+    def cli_run(cls):
+        parser = NuitkaParser(epilog=gettext("Extra arguments are added to extra_flags"))
+        parser.add_arguments()
+        config, non_config = parser.parse_to_objects()
+        cls.generate_file(config, non_config.output_file)
+
+
 def main():
-    parser = NuitkaParser(epilog=gettext("Extra arguments are added to extra_flags"))
-    parser.add_arguments()
-    configs, non_config = parser.parse_to_objects()
-    with open(non_config.output_file, 'w') as file:
-        yaml.safe_dump(configs.to_dict(), file)
+    NuitkaGenerator.cli_run()
 
 if __name__ == '__main__':
     main()

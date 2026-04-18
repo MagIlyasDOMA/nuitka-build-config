@@ -1,8 +1,8 @@
 [project]
 name = "nuitka-build-config"
 version = "0.1.0"
-description = "Add your description here"
-requires-python = ">=3.13"
+description = "Nuitka build config"
+requires-python = ">=3.9"
 dependencies = [
     "argparse-typing>=0.2.0",
     "locale-plus>=0.1.2",
@@ -10,8 +10,11 @@ dependencies = [
     "pathlike-typing>=1.0.0",
     "pydantic>=2",
     "pyyaml>=6.0.3",
-    "ruamel-yaml>=0.19.1",
 ]
+
+[project.scripts]
+nbc = "nuitka_build_config:main"
+nbc-generator = "nuitka_build_config.generator:main"
 
 [dependency-groups]
 dev = [

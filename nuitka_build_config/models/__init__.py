@@ -182,9 +182,10 @@ class NuitkaConfig(BaseModel):
         if not yaml_compatible: output = raw
         else:
             for key, value in dict(raw).items():
-                if any((isinstance(value, (str, int, float, bool, dict, list, tuple, set)),
-                        value is None)): continue
-                output[key] = str(value)
+                if isinstance(value, set): value = list(value)
+                elif not any((isinstance(value, (str, int, float, bool, dict, list, tuple)),
+                            value is None)): value = str(value)
+                output[key] = value
         return output # type: ignore
 
 

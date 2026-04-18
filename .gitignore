@@ -6,3 +6,4 @@ test.py
 *.pyc
 /pydantic2typedict.py
 nuitka_build_config/models/__init__.new.py
+/tests/
