@@ -1,12 +1,20 @@
-import argparse
+import argparse, yaml
+from dataclasses import dataclass
 from typing import Self
 from pathlib import Path
 from .i18n import gettext
 from .models import NuitkaConfig
 from .typings.models import NuitkaConfigDict
 
+__all__ = ['NuitkaParser', 'main']
+
 
 class NuitkaParser(argparse.ArgumentParser):
+    @dataclass
+    class ArgvConfig:
+        nuitka_config: NuitkaConfig
+        output_filename: str
+
     def _add_config_root_arguments(self):
         self.add_argument('--mode', dest='type',
                           help=gettext("Compilation mode: 'accelerated' (with Python dependency), 'standalone' (folder with exe), "
@@ -59,27 +67,28 @@ class NuitkaParser(argparse.ArgumentParser):
         includes_group = self.add_argument_group("Includes",
                                                  description=gettext("Settings for including additional modules, packages and data files"))
         includes_group.add_argument('--include-package', action='append', dest='include__packages',
-                                    help=gettext("List of packages to include in the build (--include-package)"))
+                                    metavar='PACKAGES', help=gettext("List of packages to include in the build (--include-package)"))
         includes_group.add_argument('--include-module', action='append', dest='include__modules',
-                                    help=gettext("List of modules to include in the build (--include-module)"))
+                                    metavar='MODULES', help=gettext("List of modules to include in the build (--include-module)"))
         includes_group.add_argument('--include-package-data', action='append', dest='include__package_data',
+                                    metavar='PACKAGE_DATA',
                                     help=gettext("Packages whose data files should be included (--include-package-data)"))
         includes_group.add_argument('--include-data-files', action='append', dest='include__files',
-                                    help=gettext("File patterns to include (--include-data-files)"))
+                                    metavar='FILES', help=gettext("File patterns to include (--include-data-files)"))
         includes_group.add_argument('--include-data-dir', action='append', dest='include__directories',
-                                    help=gettext("Data directories to include (--include-data-dir)"))
+                                    metavar='DIRECTORIES', help=gettext("Data directories to include (--include-data-dir)"))
         includes_group.add_argument('--noinclude-data-files', action='append', dest='include__noinclude_data_files',
-                                    help=gettext("File patterns to exclude from data (--noinclude-data-files)"))
+                                    metavar='NOINCLUDE_DATA_FILES', help=gettext("File patterns to exclude from data (--noinclude-data-files)"))
 
     def _add_windows_arguments(self):
         windows_group = self.add_argument_group("Windows parameters")
         windows_params__icon = windows_group.add_mutually_exclusive_group()
         windows_params__icon.add_argument('--windows-icon-from-ico', dest='windows_params__icon', type=Path,
-                                   help=gettext("Path to icon file (ICO format)"))
+                                          metavar='ICON', help=gettext("Path to icon file (ICO format)"))
         windows_params__icon.add_argument('--windows-icon-from-exe', dest='windows_params__icon', type=Path,
-                                   help=gettext("Extract icon from existing EXE file"))
+                                          metavar='ICON', help=gettext("Extract icon from existing EXE file"))
         windows_group.add_argument('--windows-console-mode', dest='windows_params__console_mode',
-                                   choices=['disable', 'force'],
+                                   choices=['disable', 'force'], metavar='CONSOLE_MODE',
                                    help=gettext("Windows console mode: 'force' - create a console window (if not started from console), "
                                                 "'disable' - do not create a console (--windows-console-mode)"))
         windows_group.add_argument('--windows-uac-admin', action='store_true', dest='windows_params__uac_admin',
@@ -90,27 +99,34 @@ class NuitkaParser(argparse.ArgumentParser):
     def _add_macos_arguments(self):
         macos_group = self.add_argument_group("MacOS parameters")
         macos_group.add_argument('--macos-app-icon', dest='macos_params__icon', type=Path,
+                                 metavar='ICON',
                                  help=gettext("Path to icon file for macOS .app bundle (--macos-app-icon)"))
         macos_group.add_argument('--macos-create-app-bundle', dest='macos_params__create_app_bundle', action='store_true',
                                  help=gettext("Create a .app bundle instead of a regular binary. Enables standalone mode (--macos-create-app-bundle)"))
         macos_group.add_argument('--macos-signed-app-name', dest='macos_params__signed_app_name',
+                                 metavar='SIGNED_APP_NAME',
                                  help=gettext("Application name for macOS signing in 'com.YourCompany.AppName' format. "
                                               "Globally unique identifier for accessing protected APIs (--macos-signed-app-name)"))
 
     def _add_linux_arguments(self):
         linux_group = self.add_argument_group("Linux parameters")
         linux_group.add_argument('--linux-icon', dest='linux_params__icon', type=Path,
+                                 metavar='ICON',
                                  help=gettext("Path to icon file for Linux (--linux-icon)"))
 
     def _add_version_info_arguments(self):
         version_info_group = self.add_argument_group("Version info")
         version_info_group.add_argument('--company-name', dest='version_info__company_name',
+                                        metavar='COMPANY_NAME',
                                         help=gettext("Company name in version info (--company-name)"))
         version_info_group.add_argument('--product-name', dest='version_info__product_name',
+                                        metavar='PRODUCT_NAME',
                                         help=gettext("Product name in version info (--product-name)"))
         version_info_group.add_argument('--file-version', dest='version_info__file_version',
+                                        metavar='FILE_VERSION',
                                         help=gettext("File version in X.X.X.X format (--file-version)"))
         version_info_group.add_argument('--copyright', dest='version_info__copyright_text',
+                                        metavar='COPYRIGHT_TEXT',
                                         help=gettext("Copyright text (--copyright)"))
 
     def _add_actions_arguments(self):
@@ -120,6 +136,10 @@ class NuitkaParser(argparse.ArgumentParser):
         actions_group.add_argument('--add-post-compile-action', '-p',
                                    dest='post_compile_actions', help=gettext("Commands executed after compilation"))
 
+    def _add_non_config_arguments(self):
+        non_config_group = self.add_argument_group("Other")
+        non_config_group.add_argument('--output-file', '-o', dest='non_config__output_file')
+
     def add_arguments(self) -> Self:
         self._add_config_root_arguments()
         self._add_includes_arguments()
@@ -128,6 +148,7 @@ class NuitkaParser(argparse.ArgumentParser):
         self._add_linux_arguments()
         self._add_version_info_arguments()
         self._add_actions_arguments()
+        self._add_non_config_arguments()
         return self
 
     def _validate_main(self, dct: dict, /) -> str:
@@ -145,11 +166,13 @@ class NuitkaParser(argparse.ArgumentParser):
         self._validate_main(raw_dict)
         raw_dict['extra_flags'] = extra
         output = dict()
+        non_config_items = dict()
         for key, value in raw_dict.items():
             if value is None and not add_nones: continue
             if '__' in key: output[key] = value
             else:
                 namespace, key = key.split('__', 1)
+                if namespace == 'non_config': non_config_items[key] = value
                 if namespace not in output: output[namespace] = dict()
                 output[namespace][key] = value
         return output # type: ignore
@@ -162,7 +185,6 @@ def main():
     parser = NuitkaParser()
     parser.add_arguments()
     args = parser.parse_to_object()
-
 
 if __name__ == '__main__':
     main()

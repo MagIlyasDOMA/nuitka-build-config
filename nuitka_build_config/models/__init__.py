@@ -1,4 +1,4 @@
-import yaml
+import yaml, json
 from typing import Optional, Set
 from pathlike_typing import PathLike
 from pydantic import BaseModel, Field
@@ -166,6 +166,13 @@ class NuitkaConfig(BaseModel):
     def from_yaml_file(cls, path: PathLike) -> NuitkaConfig:
         with open(path, encoding='utf-8') as file:
             data = yaml.safe_load(file)
+            if not isinstance(data, dict): data = dict()
+        return cls.model_validate(data)
+
+    @classmethod
+    def from_json_file(cls, path: PathLike) -> NuitkaConfig:
+        with open(path, encoding='utf-8') as file:
+            data = json.load(file)
             if not isinstance(data, dict): data = dict()
         return cls.model_validate(data)
 
