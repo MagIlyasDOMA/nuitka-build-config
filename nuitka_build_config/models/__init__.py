@@ -149,12 +149,14 @@ class NuitkaConfig(BaseModel):
 
     pre_compile_actions: StrList = Field(
         default_factory=list,
-        description=gettext("Commands executed before compilation")
+        description=gettext("Commands executed before compilation"),
+        json_schema_extra=dict(non_cli=True)
     )
 
     post_compile_actions: StrList = Field(
         default_factory=list,
-        description=gettext("Commands executed after compilation")
+        description=gettext("Commands executed after compilation"),
+        json_schema_extra=dict(non_cli=True)
     )
 
     model_config = dict(

@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import Self, Tuple, Dict
 from pathlib import Path
 from pathlike_typing import PathLike
+from .builder import NuitkaBuilder
 from .i18n import gettext
 from .models import NuitkaConfig
 from .typings.models import NuitkaConfigDict
@@ -10,9 +11,10 @@ from .typings.models import NuitkaConfigDict
 __all__ = ['NuitkaParser', 'GeneratorArgs', 'NuitkaGenerator', 'main']
 
 
-@dataclass
+@dataclass(slots=True, frozen=True, kw_only=True)
 class GeneratorArgs:
     output_file: str
+    compile: bool
 
 
 class NuitkaParser(argparse.ArgumentParser):
@@ -142,6 +144,8 @@ class NuitkaParser(argparse.ArgumentParser):
                                                    gettext("Arguments that are not written to the configuration file"))
         non_config_group.add_argument('--output-file', '-o', default='nbc-config.yaml',
                                       dest='non_config__output_file', metavar='FILE', help=gettext("Path to output file"))
+        non_config_group.add_argument('--compile', '-c', action='store_true',
+                                      dest='non_config__compile', help=gettext("Compile the application after generating the configuration file"))
 
     def add_arguments(self) -> Self:
         self.add_argument('--version', '-v', action='version', help=gettext("show program's version number and exit"))
@@ -188,21 +192,20 @@ class NuitkaParser(argparse.ArgumentParser):
 
 class NuitkaGenerator:
     @staticmethod
-    def generate_file(config: NuitkaConfig, path: PathLike):
+    def generate_file(config: NuitkaConfig, path: PathLike, compile: bool):
         with open(path, 'w', encoding='utf-8') as file:
             file.write("# $schema: https://raw.githubusercontent.com/MagIlyasDOMA/nuitka-build-config/refs/heads/main/schema.json\n\n")
             yaml.safe_dump(config.to_dict(), file, allow_unicode=True)
+        if compile: NuitkaBuilder().run(path)
 
     @classmethod
     def cli_run(cls):
         parser = NuitkaParser(epilog=gettext("Extra arguments are added to extra_flags"))
         parser.add_arguments()
         config, non_config = parser.parse_to_objects()
-        cls.generate_file(config, non_config.output_file)
+        cls.generate_file(config, non_config.output_file, non_config.compile)
 
 
-def main():
-    NuitkaGenerator.cli_run()
+def main(): NuitkaGenerator.cli_run()
 
-if __name__ == '__main__':
-    main()
+if __name__ == '__main__': main()

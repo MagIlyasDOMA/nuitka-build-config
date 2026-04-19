@@ -1,5 +1,5 @@
 import platform, sys, subprocess, shlex
-from pathlib import Path
+from dataclasses import dataclass
 from typing import Optional
 from pathlike_typing import PathLike
 from ..models import NuitkaConfig
@@ -10,7 +10,19 @@ from .base import DecoratorMixin
 __all__ = ['NuitkaBuilder']
 
 
+@dataclass(slots=True, frozen=True, kw_only=True)
+class BuildRunOutput:
+    pre: ProcessesList
+    main: subprocess.CompletedProcess
+    post: ProcessesList
+
+
 class NuitkaBuilder(DecoratorMixin):
+    @staticmethod
+    def _field_is_cli(field_name: str) -> bool:
+        field = NuitkaConfig.model_fields[field_name]
+        return not getattr(field, 'json_schema_extra', dict()).get('non_cli', False)
+
     @staticmethod
     def _get_argv_add_method_name(attr_name: str):
         return f'_add_{attr_name}'
@@ -28,8 +40,15 @@ class NuitkaBuilder(DecoratorMixin):
         argv = [sys.executable, '-m', 'nuitka']
         config: NuitkaConfigDict = self.config
         for key, value in config.items():
-            self._get_argv_add_method(key)(self, argv, value)
+            if self._field_is_cli(key): self._get_argv_add_method(key)(self, argv, value)
         return argv
+
+    @property
+    def non_cli_arguments(self) -> NonCliArguments:
+        output = dict()
+        for key, value in self.config.items():
+            if not self._field_is_cli(key): output[key] = value
+        return output # type: ignore
 
     @property
     def command(self) -> str:
@@ -38,6 +57,14 @@ class NuitkaBuilder(DecoratorMixin):
         if platform.system() == 'Windows': return subprocess.list2cmdline(argv)
         return ' '.join(shlex.quote(arg) for arg in argv)
 
-    def run(self, config_path: Optional[PathLike] = None) -> subprocess.CompletedProcess:
+    def run(self, config_path: Optional[PathLike] = None) -> BuildRunOutput:
         if config_path is not None: self.config_path = config_path
-        return subprocess.run(self.argv, text=True)
+        non_cli_arguments: NonCliArguments = self.non_cli_arguments
+        pre_processes = list()
+        post_processes = list()
+        for command in non_cli_arguments['pre_compile_actions']:
+            pre_processes.append(subprocess.run(command, text=True, shell=True))
+        for command in non_cli_arguments['post_compile_actions']:
+            post_processes.append(subprocess.run(command, text=True, shell=True))
+        main = subprocess.run(self.argv, text=True)
+        return BuildRunOutput(pre=pre_processes, main=main, post=post_processes)
