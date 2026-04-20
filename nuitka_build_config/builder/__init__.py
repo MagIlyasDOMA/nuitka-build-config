@@ -1,13 +1,25 @@
 import platform, sys, subprocess, shlex
+from argparse import ArgumentParser
 from dataclasses import dataclass
 from typing import Optional
+from pathlib import Path
 from pathlike_typing import PathLike
+from ..i18n import gettext
 from ..models import NuitkaConfig
 from ..typings import *
 from ..typings.models import NuitkaConfigDict
 from .base import DecoratorMixin
 
-__all__ = ['NuitkaBuilder']
+__all__ = ['NuitkaBuilder', 'BuildRunOutput', 'BuilderParser']
+
+
+class BuilderParser(ArgumentParser):
+    def add_arguments(self):
+        self.add_argument('config_path', type=Path, help=gettext('Path to Nuitka config file'),
+                            nargs='?', default=None)
+        self.add_argument('main', type=Path, help=gettext('Path to main Nuitka build file'),
+                            nargs='?', default=None)
+        self.add_argument('--dry-run', action='store_true', help=gettext('Dry run'))
 
 
 @dataclass(slots=True, frozen=True, kw_only=True)
