@@ -1,20 +1,22 @@
 import argparse
-from pathlib import Path
 from .builder import *
+from .builder import main as builder_main
 from .models import NuitkaConfig
-from .generator import NuitkaParser, GeneratorArgs, NuitkaGenerator, main as generator_main
+from .generator import *
+from .generator import main as generator_main
 from .typings.models import NuitkaConfigDict
 
 __all__ = ['NuitkaBuilder', 'NuitkaConfig', 'NuitkaConfigDict', 'main', '__version__',
-           'NuitkaGenerator', 'NuitkaParser', 'GeneratorArgs', 'generator_main',
-           'BuildRunOutput', 'BuilderParser']
+           'NuitkaGenerator', 'GeneratorParser', 'GeneratorArgs', 'generator_main',
+           'BuildRunOutput', 'BuilderParser', 'builder_main']
 __version__ = '0.1.0'
 
 
 def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
-    subparsers.add_parser()
+    subparsers.add_parser('build', parser_class=BuilderParser)
+    subparsers.add_parser('generate',  parser_class=GeneratorParser)
     args = parser.parse_args()
     builder_ = NuitkaBuilder(args.config_path, args.main)
     if args.dry_run: print(builder_.argv)

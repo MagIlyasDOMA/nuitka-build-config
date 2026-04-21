@@ -1,19 +1,18 @@
 import platform, sys, subprocess, shlex
-from argparse import ArgumentParser
-from dataclasses import dataclass
 from typing import Optional
 from pathlib import Path
 from pathlike_typing import PathLike
-from ..i18n import gettext
-from ..models import NuitkaConfig
-from ..typings import *
-from ..typings.models import NuitkaConfigDict
-from .base import DecoratorMixin
+from .base import DecoratorMixin, BaseParser
+from .decorators import dataclass
+from .i18n import gettext
+from .models import NuitkaConfig
+from .typings import *
+from .typings.models import NuitkaConfigDict
 
-__all__ = ['NuitkaBuilder', 'BuildRunOutput', 'BuilderParser']
+__all__ = ['NuitkaBuilder', 'BuildRunOutput', 'BuilderParser', 'main']
 
 
-class BuilderParser(ArgumentParser):
+class BuilderParser(BaseParser):
     def add_arguments(self):
         self.add_argument('config_path', type=Path, help=gettext('Path to Nuitka config file'),
                             nargs='?', default=None)
@@ -22,7 +21,7 @@ class BuilderParser(ArgumentParser):
         self.add_argument('--dry-run', action='store_true', help=gettext('Dry run'))
 
 
-@dataclass(slots=True, frozen=True, kw_only=True)
+@dataclass
 class BuildRunOutput:
     pre: ProcessesList
     main: subprocess.CompletedProcess
@@ -78,5 +77,21 @@ class NuitkaBuilder(DecoratorMixin):
             pre_processes.append(subprocess.run(command, text=True, shell=True))
         for command in non_cli_arguments['post_compile_actions']:
             post_processes.append(subprocess.run(command, text=True, shell=True))
-        main = subprocess.run(self.argv, text=True)
-        return BuildRunOutput(pre=pre_processes, main=main, post=post_processes)
+        main_ = subprocess.run(self.argv, text=True)
+        return BuildRunOutput(pre=pre_processes, main=main_, post=post_processes)
+
+    @classmethod
+    def cli_run(cls) -> Optional[BuildRunOutput]:
+        parser = BuilderParser()
+        args = parser.parse_args()
+        builder = cls(args.config_path, args.main)
+        if args.dry_run:
+            return None
+        return builder.run()
+
+
+def main(): NuitkaBuilder.cli_run()
+
+
+if __name__ == '__main__': main()
+

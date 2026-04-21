@@ -1,12 +1,14 @@
 import platform
+from abc import ABCMeta, abstractmethod
+from argparse import ArgumentParser
 from pathlib import Path
-from typing import Set, Optional
+from typing import Set, Optional, Self
 from pathlike_typing import PathLike
-from ..decorators import argv_add
-from ..typings import *
-from ..typings.models import *
+from .decorators import argv_add
+from .typings import *
+from .typings.models import *
 
-__all__ = ['BaseBuilder', 'DecoratorMixin']
+__all__ = ['BaseBuilder', 'DecoratorMixin', 'BaseParser']
 
 
 class BaseBuilder:
@@ -163,3 +165,12 @@ class DecoratorMixin(BaseBuilder):
             value = arg[key]  # type: ignore
             if value: output.append(f'{option_name}={value}')
         return output
+
+
+class BaseParser(ArgumentParser, metaclass=ABCMeta):
+    def __init__(self, *args, add_arguments: bool = True, **kwargs):
+        super().__init__(*args, **kwargs)
+        if add_arguments: self.add_arguments()
+
+    @abstractmethod
+    def add_arguments(self) -> Self: return self

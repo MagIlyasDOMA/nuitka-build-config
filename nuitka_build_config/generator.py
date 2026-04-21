@@ -1,23 +1,29 @@
-import argparse, yaml
-from dataclasses import dataclass
+import yaml
 from typing import Self, Tuple, Dict
 from pathlib import Path
 from pathlike_typing import PathLike
+from .base import BaseParser
+from .decorators import dataclass
 from .builder import NuitkaBuilder
 from .i18n import gettext
 from .models import NuitkaConfig
+from .typings import NullStr
 from .typings.models import NuitkaConfigDict
 
-__all__ = ['NuitkaParser', 'GeneratorArgs', 'NuitkaGenerator', 'main']
+__all__ = ['GeneratorParser', 'GeneratorArgs', 'NuitkaGenerator', 'main']
 
 
-@dataclass(slots=True, frozen=True, kw_only=True)
+@dataclass
 class GeneratorArgs:
     output_file: str
     compile: bool
 
 
-class NuitkaParser(argparse.ArgumentParser):
+class GeneratorParser(BaseParser):
+    def __init__(self, *args, epilog: NullStr = None, **kwargs):
+        if epilog is None: epilog = gettext("Extra arguments are added to extra_flags")
+        super().__init__(*args, **kwargs, epilog=epilog)
+
     def _add_config_root_arguments(self):
         self.add_argument('--mode', dest='type',
                           help=gettext("Compilation mode: 'accelerated' (with Python dependency), 'standalone' (folder with exe), "
@@ -200,8 +206,7 @@ class NuitkaGenerator:
 
     @classmethod
     def cli_run(cls):
-        parser = NuitkaParser(epilog=gettext("Extra arguments are added to extra_flags"))
-        parser.add_arguments()
+        parser = GeneratorParser()
         config, non_config = parser.parse_to_objects()
         cls.generate_file(config, non_config.output_file, non_config.compile)
 

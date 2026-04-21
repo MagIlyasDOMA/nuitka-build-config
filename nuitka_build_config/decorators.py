@@ -1,5 +1,8 @@
+import dataclasses
 from typing import Any
 from .typings import ArgvAddFunc, StrList
+
+__all__ = ['argv_add', 'dataclass']
 
 
 def argv_add(method: ArgvAddFunc) -> ArgvAddFunc:
@@ -10,3 +13,6 @@ def argv_add(method: ArgvAddFunc) -> ArgvAddFunc:
     new_method.argv_add = True
     new_method.config_attr_type = 'argv_add'
     return new_method
+
+
+dataclass = dataclasses.dataclass(slots=True, frozen=True, kw_only=True)
