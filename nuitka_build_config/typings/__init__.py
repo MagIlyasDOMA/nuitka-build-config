@@ -21,9 +21,11 @@ ArgvAddFunc = Callable[[Self, StrList, Any], StrList]
 
 FieldType = Literal['str', 'int', 'bool', 'choice', 'ternary', 'strlist', 'filelist', 'custom', 'pathlike']
 
+
 class TrueFalseDict(TypedDict):
     true: str
     false: str
+
 
 FieldTypeData = Union[TrueFalseDict, Dict[str, str]]
 ProcessesList = List[CompletedProcess]

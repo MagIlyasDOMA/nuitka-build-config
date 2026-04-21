@@ -244,8 +244,8 @@ msgid "Copyright text (--copyright)"
 msgstr "Copyright text (--copyright)"
 
 #: nuitka_build_config/generator.py:136
-msgid "Actions"
-msgstr "Actions"
+msgid "Commands"
+msgstr "Commands"
 
 #: nuitka_build_config/generator.py:136
 msgid "Add commands to run before or after compilation"

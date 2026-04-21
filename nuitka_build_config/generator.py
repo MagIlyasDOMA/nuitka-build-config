@@ -139,7 +139,7 @@ class GeneratorParser(BaseParser):
                                         help=gettext("Copyright text (--copyright)"))
 
     def _add_actions_arguments(self):
-        actions_group = self.add_argument_group(gettext("Actions"), gettext("Add commands to run before or after compilation"))
+        actions_group = self.add_argument_group(gettext("Commands"), gettext("Add commands to run before or after compilation"))
         actions_group.add_argument('--add-pre-compile-action', '-b',
                                    dest='pre_compile_actions', help=gettext("Commands executed before compilation"))
         actions_group.add_argument('--add-post-compile-action', '-p',

@@ -17,10 +17,11 @@ def main():
     subparsers = parser.add_subparsers()
     subparsers.add_parser('build', parser_class=BuilderParser)
     subparsers.add_parser('generate',  parser_class=GeneratorParser)
+    subparsers.add_parser('help')
     args = parser.parse_args()
-    builder_ = NuitkaBuilder(args.config_path, args.main)
-    if args.dry_run: print(builder_.argv)
-    else: builder_.run()
+    # builder_ = NuitkaBuilder(args.config_path, args.main)
+    # if args.dry_run: print(builder_.argv)
+    # else: builder_.run()
 
 
 if __name__ == '__main__': main()
