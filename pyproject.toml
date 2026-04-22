@@ -14,11 +14,11 @@ dependencies = [
 
 [project.scripts]
 nbc = "nuitka_build_config:main"
-nbc-generator = "nuitka_build_config.generator:main"
 
 [dependency-groups]
 dev = [
     "babel>=2.18.0",
+    "build>=1.4.3",
     "devscript>=0.1.1",
 ]
 
