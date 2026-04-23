@@ -154,7 +154,6 @@ class GeneratorParser(BaseParser):
                                       dest='non_config__compile', help=gettext("Compile the application after generating the configuration file"))
 
     def add_arguments(self) -> Self:
-        self.add_argument('--version', '-v', action='version', help=gettext("show program's version number and exit"))
         self._add_config_root_arguments()
         self._add_includes_arguments()
         self._add_windows_arguments()

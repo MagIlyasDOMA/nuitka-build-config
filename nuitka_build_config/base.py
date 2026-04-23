@@ -169,6 +169,7 @@ class DecoratorMixin(BaseBuilder):
 
 class BaseParser(HelpI18nMixin, metaclass=ABCMeta):
     def __init__(self, *args, add_arguments: bool = True, **kwargs):
+        kwargs.pop('parser_class', None)
         super().__init__(*args, **kwargs)
         if add_arguments: self.add_arguments()
 

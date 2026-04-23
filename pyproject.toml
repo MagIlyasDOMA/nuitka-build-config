@@ -1,10 +1,14 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "nuitka-build-config"
 version = "0.1.0"
 description = "Nuitka build config"
 requires-python = ">=3.9"
 dependencies = [
-    "argparse-help-i18n",
+    "argparse-help-i18n>=0.1.0",
     "argparse-typing>=0.2.0",
     "locale-plus>=0.1.2",
     "nuitka>=4",
@@ -19,14 +23,17 @@ nbc = "nuitka_build_config:main"
 [dependency-groups]
 dev = [
     "babel>=2.18.0",
-    "build>=1.4.3",
     "devscript>=0.1.1",
 ]
+
+[tool.setuptools]
+packages = {find = {}}
+include-package-data = true
+
+[tool.setuptools.package-data]
+nuitka_build_config = ["locale/**"]
 
 [devscript]
 sync = "git pull origin && uv sync"
 compile_i18n = "pybabel compile -d nuitka_build_config/locale -D nbc"
 generate_i18n_pot = "pybabel extract -F ./babel.cfg -o ./nuitka_build_config/locale/nbc.pot ."
-
-[tool.uv.sources]
-argparse-help-i18n = { path = "../argparse-help-i18n" }
