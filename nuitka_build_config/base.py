@@ -1,6 +1,6 @@
 import platform
 from abc import ABCMeta, abstractmethod
-from argparse import ArgumentParser
+from argparse_help_i18n import HelpI18nMixin
 from pathlib import Path
 from typing import Set, Optional, Self
 from pathlike_typing import PathLike
@@ -167,7 +167,7 @@ class DecoratorMixin(BaseBuilder):
         return output
 
 
-class BaseParser(ArgumentParser, metaclass=ABCMeta):
+class BaseParser(HelpI18nMixin, metaclass=ABCMeta):
     def __init__(self, *args, add_arguments: bool = True, **kwargs):
         super().__init__(*args, **kwargs)
         if add_arguments: self.add_arguments()

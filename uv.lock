@@ -16,6 +16,25 @@ wheels = [
 ]
 
 [[package]]
+name = "argparse-help-i18n"
+version = "0.1.0"
+source = { directory = "../argparse-help-i18n" }
+dependencies = [
+    { name = "locale-plus" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "locale-plus", specifier = ">=0.1.2" }]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "argparse-typing", marker = "python_full_version >= '3.9'", specifier = ">=0.2.0" },
+    { name = "babel", specifier = ">=2.18.0" },
+    { name = "build", specifier = ">=1.2.2" },
+    { name = "devscript", specifier = ">=0.1.1" },
+]
+
+[[package]]
 name = "argparse-typing"
 version = "0.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -137,6 +156,7 @@ name = "nuitka-build-config"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "argparse-help-i18n" },
     { name = "argparse-typing" },
     { name = "locale-plus" },
     { name = "nuitka" },
@@ -154,6 +174,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "argparse-help-i18n", directory = "../argparse-help-i18n" },
     { name = "argparse-typing", specifier = ">=0.2.0" },
     { name = "locale-plus", specifier = ">=0.1.2" },
     { name = "nuitka", specifier = ">=4" },
