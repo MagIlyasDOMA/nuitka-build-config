@@ -15,9 +15,9 @@ __version__ = '0.1.0'
 def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
-    builder_parser =  subparsers.add_parser('build', parser_class=BuilderParser)
-    generator_parser = subparsers.add_parser('generate', parser_class=GeneratorParser)
-    help_parser = subparsers.add_parser('help')
+    builder_parser =  subparsers.add_parser('build', help='Build a Nuitka project')
+    generator_parser = subparsers.add_parser('generate', help='Generate a Nuitka config file')
+    help_parser = subparsers.add_parser('help', help='Show help and exit')
     args = parser.parse_args()
     # builder_ = NuitkaBuilder(args.config_path, args.main)
     # if args.dry_run: print(builder_.argv)
