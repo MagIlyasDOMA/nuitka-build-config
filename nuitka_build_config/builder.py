@@ -81,9 +81,9 @@ class NuitkaBuilder(DecoratorMixin):
         return BuildRunOutput(pre=pre_processes, main=main_, post=post_processes)
 
     @classmethod
-    def cli_run(cls) -> Optional[BuildRunOutput]:
+    def cli_run(cls, args=None) -> Optional[BuildRunOutput]:
         parser = BuilderParser()
-        args = parser.parse_args()
+        args = parser.parse_args(args)
         builder = cls(args.config_path, args.main)
         if args.dry_run:
             return None

@@ -1,5 +1,6 @@
 import yaml
-from typing import Self, Tuple, Dict
+from argparse import Namespace
+from typing import Self, Tuple, Dict, Optional
 from pathlib import Path
 from pathlike_typing import PathLike
 from .base import BaseParser
@@ -204,9 +205,9 @@ class NuitkaGenerator:
         if compile: NuitkaBuilder().run(path)
 
     @classmethod
-    def cli_run(cls):
+    def cli_run(cls, args=None):
         parser = GeneratorParser()
-        config, non_config = parser.parse_to_objects()
+        config, non_config = parser.parse_to_objects(args)
         cls.generate_file(config, non_config.output_file, non_config.compile)
 
 

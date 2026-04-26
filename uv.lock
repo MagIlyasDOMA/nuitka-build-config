@@ -17,14 +17,14 @@ wheels = [
 
 [[package]]
 name = "argparse-help-i18n"
-version = "0.1.0"
+version = "0.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "locale-plus" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/63/54/247dfd5169b3c429f4c70fed0125af3f23c721a3db2dbc699d8bce441bb2/argparse_help_i18n-0.1.0.tar.gz", hash = "sha256:4a98a4cd1533474fa2cb9c2ad002afa0c44bd707ff56e10233bbaec4cbd96c73", size = 11543, upload-time = "2026-04-23T16:21:26.561Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/01/12/477611c1e039300ada7eb9c4df3f0a34afc1fbd5469c64d1422de7e4f1fb/argparse_help_i18n-0.2.1.tar.gz", hash = "sha256:1cec95bbe667a9e8706014d357e223a698072abdccf2f683a98db83abab7c5e0", size = 11637, upload-time = "2026-04-26T14:30:32.791Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e4/40/37fad7186698582ff97e179524ed8c334c1c6cec1c5e321af7386067a252/argparse_help_i18n-0.1.0-py3-none-any.whl", hash = "sha256:c15929292891073ca21b252b0e34922bc06b64887f6f29f148b7d1c4aaf4a823", size = 15803, upload-time = "2026-04-23T16:21:24.688Z" },
+    { url = "https://files.pythonhosted.org/packages/6e/08/b9f0a2e1d03222d6b98f7d5fe6a88e745afc5353d4872baf585158a642f8/argparse_help_i18n-0.2.1-py3-none-any.whl", hash = "sha256:f44780fbef61ccf57d299840c81754e7d2b007ecdf5b6e93c88db96fcbf4155a", size = 15956, upload-time = "2026-04-26T14:30:31.445Z" },
 ]
 
 [[package]]
@@ -100,6 +100,7 @@ dependencies = [
     { name = "pathlike-typing" },
     { name = "pydantic" },
     { name = "pyyaml" },
+    { name = "scparser" },
 ]
 
 [package.dev-dependencies]
@@ -110,13 +111,14 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "argparse-help-i18n", specifier = ">=0.1.0" },
+    { name = "argparse-help-i18n", specifier = ">=0.2.1" },
     { name = "argparse-typing", specifier = ">=0.2.0" },
     { name = "locale-plus", specifier = ">=0.1.2" },
     { name = "nuitka", specifier = ">=4" },
     { name = "pathlike-typing", specifier = ">=1.0.0" },
     { name = "pydantic", specifier = ">=2" },
     { name = "pyyaml", specifier = ">=6.0.3" },
+    { name = "scparser", specifier = ">=0.1.2" },
 ]
 
 [package.metadata.requires-dev]
@@ -351,6 +353,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/dd/62/71c27c94f457cf4418ef8ccc71735324c549f7e3ea9d34aba50874563561/pyyaml-6.0.3-cp39-cp39-musllinux_1_2_x86_64.whl", hash = "sha256:27c0abcb4a5dac13684a37f76e701e054692a9b2d3064b70f5e4eb54810553d7", size = 755677, upload-time = "2025-09-25T21:33:09.876Z" },
     { url = "https://files.pythonhosted.org/packages/29/3d/6f5e0d58bd924fb0d06c3a6bad00effbdae2de5adb5cda5648006ffbd8d3/pyyaml-6.0.3-cp39-cp39-win32.whl", hash = "sha256:1ebe39cb5fc479422b83de611d14e2c0d3bb2a18bbcb01f229ab3cfbd8fee7a0", size = 142592, upload-time = "2025-09-25T21:33:10.983Z" },
     { url = "https://files.pythonhosted.org/packages/f0/0c/25113e0b5e103d7f1490c0e947e303fe4a696c10b501dea7a9f49d4e876c/pyyaml-6.0.3-cp39-cp39-win_amd64.whl", hash = "sha256:2e71d11abed7344e42a8849600193d15b6def118602c4c176f748e4583246007", size = 158777, upload-time = "2025-09-25T21:33:15.55Z" },
+]
+
+[[package]]
+name = "scparser"
+version = "0.1.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/08/ac/e16e78a52d452036032949ee95a61b2e4f753628169b274f5b30ad80354b/scparser-0.1.2.tar.gz", hash = "sha256:4d76618ce6e6b547ef13626da449d709bae3ea57abe938c5f4572deaeb00df5c", size = 3469, upload-time = "2026-04-26T13:37:35.047Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6b/09/f09d80b4ebb91b14825897b22a0191c10e8923aa5b4186aad295e089c132/scparser-0.1.2-py3-none-any.whl", hash = "sha256:876263155bbd429e09f7b74420bfc76460c8543a254fa494cbf4ec491053e431", size = 3525, upload-time = "2026-04-26T13:37:33.396Z" },
 ]
 
 [[package]]

@@ -8,13 +8,14 @@ version = "0.1.0"
 description = "Nuitka build config"
 requires-python = ">=3.9"
 dependencies = [
-    "argparse-help-i18n>=0.1.0",
+    "argparse-help-i18n>=0.2.1",
     "argparse-typing>=0.2.0",
     "locale-plus>=0.1.2",
     "nuitka>=4",
     "pathlike-typing>=1.0.0",
     "pydantic>=2",
     "pyyaml>=6.0.3",
+    "scparser>=0.1.2",
 ]
 
 [project.scripts]
