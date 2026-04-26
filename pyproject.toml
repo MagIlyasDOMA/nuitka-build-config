@@ -17,6 +17,10 @@ dependencies = [
     "pyyaml>=6.0.3",
     "scparser>=0.1.2",
 ]
+license = {text = "MIT"}
+authors = [
+    {name = "MagIlyasDOMA", email = "magilyas.doma.09@list.ru"}
+]
 
 [project.scripts]
 nbc = "nuitka_build_config:main"
@@ -37,4 +41,4 @@ nuitka_build_config = ["locale/**"]
 [devscript]
 sync = "git pull origin && uv sync"
 compile_i18n = "pybabel compile -d nuitka_build_config/locale -D nbc"
-generate_i18n_pot = "pybabel extract -F ./babel.cfg -o ./nuitka_build_config/locale/nbc.pot ."
+generate_i18n_pot = "pybabel extract -F ./babel.cfg -o ./nuitka_build_config/locale/nbc.pot . --project=\"nuitka-build-config\" --version=\"0.1.0\" --last-translator=\"MagIlyasDOMA <magilyas.doma.09@list.ru>\""

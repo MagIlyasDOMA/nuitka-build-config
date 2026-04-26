@@ -22,9 +22,9 @@ class MainParser(SubcommandsParser, HelpI18nMixin): pass
 def main():
     parser = MainParser()
     subparsers = parser.add_subparsers(dest='command')
-    builder_parser =  subparsers.add_parser('build', parser=BuilderParser, help=gettext("Build a Nuitka project"))
-    generator_parser = subparsers.add_parser('generate', parser=GeneratorParser, help=gettext("Generate a Nuitka config file"))
-    help_parser = subparsers.add_parser('help', help=parser.get_help_message(), add_help=False)
+    subparsers.add_parser('build', parser=BuilderParser, help=gettext("Build a Nuitka project"))
+    subparsers.add_parser('generate', parser=GeneratorParser, help=gettext("Generate a Nuitka config file"))
+    subparsers.add_parser('help', help=parser.get_help_message(), add_help=False)
     args = parser.parse_args()
     argv = sys.argv[2:] if len(sys.argv) > 2 else []
     match args.command:
