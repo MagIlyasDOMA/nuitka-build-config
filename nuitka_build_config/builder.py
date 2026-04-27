@@ -75,9 +75,9 @@ class NuitkaBuilder(DecoratorMixin):
         post_processes = list()
         for command in non_cli_arguments['pre_compile_actions']:
             pre_processes.append(subprocess.run(command, text=True, shell=True))
+        main_ = subprocess.run(self.argv, text=True)
         for command in non_cli_arguments['post_compile_actions']:
             post_processes.append(subprocess.run(command, text=True, shell=True))
-        main_ = subprocess.run(self.argv, text=True)
         return BuildRunOutput(pre=pre_processes, main=main_, post=post_processes)
 
     @classmethod
