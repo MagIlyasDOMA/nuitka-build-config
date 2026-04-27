@@ -17,14 +17,14 @@ wheels = [
 
 [[package]]
 name = "argparse-help-i18n"
-version = "0.2.1"
+version = "0.2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "locale-plus" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/01/12/477611c1e039300ada7eb9c4df3f0a34afc1fbd5469c64d1422de7e4f1fb/argparse_help_i18n-0.2.1.tar.gz", hash = "sha256:1cec95bbe667a9e8706014d357e223a698072abdccf2f683a98db83abab7c5e0", size = 11637, upload-time = "2026-04-26T14:30:32.791Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d2/45/462bcaa026d50e6122c44a09638e32a73c4b77b6d9a71015076b63d30f49/argparse_help_i18n-0.2.2.tar.gz", hash = "sha256:8956bcd9caa66b3d6d3d0821726a838f042537bca0ee00ec3e4d82d99f8f8a80", size = 11744, upload-time = "2026-04-27T15:44:16.604Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6e/08/b9f0a2e1d03222d6b98f7d5fe6a88e745afc5353d4872baf585158a642f8/argparse_help_i18n-0.2.1-py3-none-any.whl", hash = "sha256:f44780fbef61ccf57d299840c81754e7d2b007ecdf5b6e93c88db96fcbf4155a", size = 15956, upload-time = "2026-04-26T14:30:31.445Z" },
+    { url = "https://files.pythonhosted.org/packages/e8/ab/c638c351675b3d388c79e8c7384463304954f424398e75016e05c177f072/argparse_help_i18n-0.2.2-py3-none-any.whl", hash = "sha256:4495d5533129c624cc4ffbc20aa783ff7d8ac91affb702990bc7b136299ce814", size = 16010, upload-time = "2026-04-27T15:44:15.2Z" },
 ]
 
 [[package]]
@@ -111,7 +111,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "argparse-help-i18n", specifier = ">=0.2.1" },
+    { name = "argparse-help-i18n", specifier = ">=0.2.2" },
     { name = "argparse-typing", specifier = ">=0.2.0" },
     { name = "locale-plus", specifier = ">=0.1.2" },
     { name = "nuitka", specifier = ">=4" },
