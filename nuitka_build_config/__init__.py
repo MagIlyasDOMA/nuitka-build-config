@@ -13,7 +13,7 @@ from .typings.models import NuitkaConfigDict
 __all__ = ['NuitkaBuilder', 'NuitkaConfig', 'NuitkaConfigDict', 'main', '__version__',
            'NuitkaGenerator', 'GeneratorParser', 'GeneratorArgs', 'generator_main',
            'BuildRunOutput', 'BuilderParser', 'builder_main']
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 
 class MainParser(SubcommandsParser, HelpI18nMixin):

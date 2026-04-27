@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nuitka-build-config"
-version = "0.1.4"
+version = "0.1.5"
 description = "Nuitka build config"
 requires-python = ">=3.9"
 dependencies = [
@@ -16,6 +16,7 @@ dependencies = [
     "pydantic>=2",
     "pyyaml>=6.0.3",
     "scparser>=0.1.2",
+    "ordered-set>=4.1.0",
 ]
 license = {text = "MIT"}
 authors = [
