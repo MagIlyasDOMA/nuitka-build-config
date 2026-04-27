@@ -16,11 +16,8 @@ __all__ = ['NuitkaBuilder', 'NuitkaConfig', 'NuitkaConfigDict', 'main', '__versi
 __version__ = '0.1.0'
 
 
-class MainParser(SubcommandsParser, HelpI18nMixin): pass
-
-
 def main():
-    parser = MainParser()
+    parser = type('MainParser', (SubcommandsParser, HelpI18nMixin), dict())(version=__version__)
     subparsers = parser.add_subparsers(dest='command')
     subparsers.add_parser('build', parser=BuilderParser, help=gettext("Build a Nuitka project"))
     subparsers.add_parser('generate', parser=GeneratorParser, help=gettext("Generate a Nuitka config file"))

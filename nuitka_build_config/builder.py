@@ -86,6 +86,7 @@ class NuitkaBuilder(DecoratorMixin):
         args = parser.parse_args(args)
         builder = cls(args.config_path, args.main)
         if args.dry_run:
+            print(builder.argv)
             return None
         return builder.run()
 
