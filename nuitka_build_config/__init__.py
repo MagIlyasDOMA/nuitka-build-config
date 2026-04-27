@@ -13,11 +13,17 @@ from .typings.models import NuitkaConfigDict
 __all__ = ['NuitkaBuilder', 'NuitkaConfig', 'NuitkaConfigDict', 'main', '__version__',
            'NuitkaGenerator', 'GeneratorParser', 'GeneratorArgs', 'generator_main',
            'BuildRunOutput', 'BuilderParser', 'builder_main']
-__version__ = '0.1.2'
+__version__ = '0.1.3'
+
+
+class MainParser(SubcommandsParser, HelpI18nMixin):
+    def __init__(self, **kwargs):
+        SubcommandsParser.__init__(self, **kwargs)
+        HelpI18nMixin.__init__(self, version=__version__)
 
 
 def main():
-    parser = type('MainParser', (SubcommandsParser, HelpI18nMixin), dict())(version=__version__)
+    parser = MainParser()
     subparsers = parser.add_subparsers(dest='command')
     subparsers.add_parser('build', parser=BuilderParser, help=gettext("Build a Nuitka project"))
     subparsers.add_parser('generate', parser=GeneratorParser, help=gettext("Generate a Nuitka config file"))
