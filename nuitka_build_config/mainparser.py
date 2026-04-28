@@ -13,5 +13,5 @@ class NBCSubcommandsAction(SubcommandsAction):
 class MainParser(SubcommandsParser, HelpI18nMixin):
     def add_subparsers(self, **kwargs):
         kwargs.setdefault('action', 'nbc_subcmds')
-        self.register('action', 'nbc_subcmds', SubcommandsAction)
+        self.register('action', 'nbc_subcmds', NBCSubcommandsAction)
         return super().add_subparsers(**kwargs)
