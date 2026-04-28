@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nuitka-build-config"
-version = "0.1.5"
+version = "0.1.6"
 description = "Nuitka build config"
 requires-python = ">=3.9"
 dependencies = [
