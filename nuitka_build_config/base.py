@@ -23,9 +23,12 @@ class BaseBuilder:
 
 
 class DecoratorMixin(BaseBuilder):
+    _quote_marker: str = '\uE000'
+    _use_quotes: bool = True
+
     @argv_add
     def _add_type(self, argv: StrList, arg: str) -> StrList:
-        return [f'--mode={arg}']
+        return [f'--mode={self._use_quotes}{arg}{self._use_quotes}']
 
     @argv_add
     def _add_run(self, argv: StrList, arg: bool) -> StrList:
@@ -34,12 +37,12 @@ class DecoratorMixin(BaseBuilder):
     @argv_add
     def _add_include(self, argv: StrList, arg: IncludesDict) -> StrList:
         output = list()
-        output.extend([f'--include-package={package}' for package in arg['packages']])
-        output.extend([f'--include-module={module}' for module in arg['modules']])
-        output.extend([f'--include-package-data={package}'] for package in arg['package_data'])
-        output.extend([f'--include-data-files={self._parse_include_file(file)}' for file in arg['files']])
-        output.extend([f'--include-data-dir={self._parse_include_file(directory)}' for directory in arg['directories']])
-        output.extend([f'--noinclude-data-files={pattern}' for pattern in arg['noinclude_data_files']])
+        output.extend([f'--include-package={self._use_quotes}{package}{self._use_quotes}' for package in arg['packages']])
+        output.extend([f'--include-module={self._use_quotes}{module}{self._use_quotes}' for module in arg['modules']])
+        output.extend([f'--include-package-data={self._use_quotes}{package}{self._use_quotes}'] for package in arg['package_data'])
+        output.extend([f'--include-data-files={self._use_quotes}{self._parse_include_file(file)}{self._use_quotes}' for file in arg['files']])
+        output.extend([f'--include-data-dir={self._use_quotes}{self._parse_include_file(directory)}{self._use_quotes}' for directory in arg['directories']])
+        output.extend([f'--noinclude-data-files={self._use_quotes}{pattern}{self._use_quotes}' for pattern in arg['noinclude_data_files']])
         return output
 
     @argv_add
@@ -53,24 +56,24 @@ class DecoratorMixin(BaseBuilder):
 
     @argv_add
     def _add_follow_import_to(self, argv: StrList, arg: str) -> StrList:
-        return [f'--follow-import-to={arg}']
+        return [f'--follow-import-to={self._use_quotes}{arg}{self._use_quotes}']
 
     @argv_add
     def _add_nofollow_import_to(self, argv: StrList, arg: str) -> StrList:
-        return [f'--nofollow-import-to={arg}']
+        return [f'--nofollow-import-to={self._use_quotes}{arg}{self._use_quotes}']
 
     @argv_add
     def _add_plugins(self, argv: StrList, arg: StrList) -> StrList:
-        return [f'--enable-plugins={plugin}' for plugin in arg]
+        return [f'--enable-plugins={self._use_quotes}{plugin}{self._use_quotes}' for plugin in arg]
 
     @argv_add
     def _add_disable_plugins(self, argv: StrList, arg: StrList) -> StrList:
-        return [f'--disable-plugins={plugin}' for plugin in arg]
+        return [f'--disable-plugins={self._use_quotes}{plugin}{self._use_quotes}' for plugin in arg]
 
     @argv_add
     def _add_main(self, argv: StrList, arg: NullPathLike) -> StrList:
         main = arg or self.main
-        return [f'--main={main}'] if main is None else []
+        return [f'--main={self._use_quotes}{main}{self._use_quotes}'] if main is None else []
 
     @argv_add
     def _add_follow_stdlib(self, argv: StrList, arg: bool) -> StrList:
@@ -85,7 +88,7 @@ class DecoratorMixin(BaseBuilder):
                 option = '--windows-icon-from-exe' if icon.endswith('.exe') \
                     else '--windows-icon-from-ico'
                 output.append('='.join((option, str(icon))))
-            output.append(f"--windows-console-mode={arg['console_mode']}")
+            output.append(f"--windows-console-mode={self._use_quotes}{arg['console_mode']}{self._use_quotes}")
             if arg['uac_admin']: output.append('--windows-uac-admin')
             if arg['uac_uiaccess']: output.append('--windows-uac-access')
         return output
@@ -95,10 +98,10 @@ class DecoratorMixin(BaseBuilder):
         output = list()
         if platform.system() == 'Darwin':
             icon = arg['icon']
-            if icon: output.append(f'--macos-app-icon={icon}')
+            if icon: output.append(f'--macos-app-icon={self._use_quotes}{icon}{self._use_quotes}')
             if arg['create_app_bundle']: output.append('--macos-create-app-bundle')
             signed_app_name = arg['signed_app_name']
-            if signed_app_name: output.append(f'--macos-signed-app-name={signed_app_name}')
+            if signed_app_name: output.append(f'--macos-signed-app-name={self._use_quotes}{signed_app_name}{self._use_quotes}')
         return output
 
     @argv_add
@@ -106,16 +109,16 @@ class DecoratorMixin(BaseBuilder):
         output = list()
         if platform.system() == 'Linux':
             icon = arg['icon']
-            if icon: output.append(f'--linux-icon={icon}')
+            if icon: output.append(f'--linux-icon={self._use_quotes}{icon}{self._use_quotes}')
         return output
 
     @argv_add
     def _add_python_flags(self, argv: StrList, arg: Set[PythonFlagType]) -> StrList:
-        return [f'--python-flag={flag}' for flag in arg]
+        return [f'--python-flag={self._use_quotes}{flag}{self._use_quotes}' for flag in arg]
 
     @argv_add
     def _add_jobs(self, argv: StrList, arg: Optional[int]) -> StrList:
-        return [f'--jobs={arg}'] if arg else []
+        return [f'--jobs={self._use_quotes}{arg}{self._use_quotes}'] if arg else []
 
     @argv_add
     def _add_debug(self, argv: StrList, arg: bool) -> StrList:
@@ -127,11 +130,11 @@ class DecoratorMixin(BaseBuilder):
 
     @argv_add
     def _add_output_dir(self, argv: StrList, arg: NullPathLike) -> StrList:
-        return [f'--output-dir={arg}'] if arg else []
+        return [f'--output-dir={self._use_quotes}{arg}{self._use_quotes}'] if arg else []
 
     @argv_add
     def _add_output_name(self, argv: StrList, arg: str) -> StrList:
-        return [f'--output-name={arg}'] if arg else []
+        return [f'--output-name={self._use_quotes}{arg}{self._use_quotes}'] if arg else []
 
     @argv_add
     def _add_remove_output(self, argv: StrList, arg: bool) -> StrList:
@@ -161,9 +164,9 @@ class DecoratorMixin(BaseBuilder):
                 case 'copyright_text':
                     option_name = '--copyright'
                 case _:
-                    option_name = f"--{key.replace('_', '-')}"
+                    option_name = f'--{key.replace('_', '-')}'
             value = arg[key]  # type: ignore
-            if value: output.append(f'{option_name}={value}')
+            if value: output.append(f'{option_name}={self._use_quotes}{value}{self._use_quotes}')
         return output
 
 

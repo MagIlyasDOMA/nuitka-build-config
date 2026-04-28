@@ -178,17 +178,20 @@ class NuitkaConfig(BaseModel):
             if not isinstance(data, dict): data = dict()
         return cls.model_validate(data)
 
+    @classmethod
+    def _dict_yaml(cls, dct: dict, /) -> dict:
+        output = dict()
+        for key, value in dct.items():
+            if isinstance(value, set): value = list(value)
+            elif isinstance(value, dict): value = cls._dict_yaml(value)
+            elif not any((isinstance(value, (str, int, float, bool, dict, list, tuple)),
+                          value is None)): value = str(value)
+            output[key] = value
+        return output
+
     def to_dict(self, yaml_compatible: bool = True) -> NuitkaConfigDict:
         raw = model2dict(self)
-        output = dict()
-        if not yaml_compatible: output = raw
-        else:
-            for key, value in dict(raw).items():
-                if isinstance(value, set): value = list(value)
-                elif not any((isinstance(value, (str, int, float, bool, dict, list, tuple)),
-                            value is None)): value = str(value)
-                output[key] = value
-        return output # type: ignore
+        return self._dict_yaml(raw) if yaml_compatible else raw # type: ignore
 
 
 def model2dict(model: BaseModel) -> dict:

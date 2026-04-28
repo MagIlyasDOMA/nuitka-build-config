@@ -9,3 +9,4 @@ nuitka_build_config/models/__init__.new.py
 /tests/
 *.egg-info/
 /README.html
+build.bat

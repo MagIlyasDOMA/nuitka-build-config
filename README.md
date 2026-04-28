@@ -115,7 +115,7 @@ print(config.output_dir)  # ./dist
 | `--mode onefile`                 | build mode                                   |
 | `--enable-plugins tk-inter`      | enable plugin                                |
 | `--windows-console-mode disable` | disable console                              |
-| `--output-file config.yaml`      | output file name (default `nbc-config.yaml`) |
+| `-o config.yaml`                 | output file name (default `nbc-config.yaml`) |
 | `--compile`                      | start build immediately after generation     |
 
 ## ⚙️ Requirements
@@ -270,7 +270,7 @@ print(config.output_dir)  # ./dist
 | `--mode onefile`                 | режим сборки                                      |
 | `--enable-plugins tk-inter`      | включить плагин                                   |
 | `--windows-console-mode disable` | отключить консоль                                 |
-| `--output-file config.yaml`      | имя выходного файла (по умолч. `nbc-config.yaml`) |
+| `-o config.yaml`                 | имя выходного файла (по умолч. `nbc-config.yaml`) |
 | `--compile`                      | сразу после генерации запустить сборку            |
 
 ## ⚙️ Требования

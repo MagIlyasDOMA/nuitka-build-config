@@ -1,4 +1,4 @@
-import platform, sys, subprocess, shlex
+import sys, subprocess
 from typing import Optional
 from pathlib import Path
 from pathlike_typing import PathLike
@@ -60,13 +60,6 @@ class NuitkaBuilder(DecoratorMixin):
         for key, value in self.config.items():
             if not self._field_is_cli(key): output[key] = value
         return output # type: ignore
-
-    @property
-    def command(self) -> str:
-        # TODO: Implement proper quoting of arguments
-        argv = self.argv
-        if platform.system() == 'Windows': return subprocess.list2cmdline(argv)
-        return ' '.join(shlex.quote(arg) for arg in argv)
 
     def run(self, config_path: Optional[PathLike] = None) -> BuildRunOutput:
         if config_path is not None: self.config_path = config_path

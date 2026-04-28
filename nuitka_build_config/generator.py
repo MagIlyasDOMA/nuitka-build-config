@@ -1,6 +1,5 @@
 import yaml
-from argparse import Namespace
-from typing import Self, Tuple, Dict, Optional
+from typing import Self, Tuple, Dict
 from pathlib import Path
 from pathlike_typing import PathLike
 from .base import BaseParser
@@ -61,7 +60,7 @@ class GeneratorParser(BaseParser):
                           help=gettext("Create an XML compilation report (--report)"))
         self.add_argument('--output-dir', type=Path, dest='output_dir',
                           help=gettext("Directory for output files (build, dist, binaries) (--output-dir)"))
-        self.add_argument('--output-name', dest='output_name',
+        self.add_argument('--output-name', '--output-file', dest='output_name',
                           help=gettext("Name of the output executable. For onefile may include path (--output-filename)"))
         self.add_argument('--remove-output', action='store_true', dest='remove_output',
                           help=gettext("Remove the build directory after creating the binary (--remove-output)"))
@@ -121,8 +120,7 @@ class GeneratorParser(BaseParser):
     def _add_linux_arguments(self):
         linux_group = self.add_argument_group("Linux parameters")
         linux_group.add_argument('--linux-icon', dest='linux_params__icon', type=Path,
-                                 metavar='ICON',
-                                 help=gettext("Path to icon file for Linux (--linux-icon)"))
+                                 metavar='ICON', help=gettext("Path to icon file for Linux (--linux-icon)"))
 
     def _add_version_info_arguments(self):
         version_info_group = self.add_argument_group("Version info")
@@ -149,7 +147,7 @@ class GeneratorParser(BaseParser):
     def _add_non_config_arguments(self):
         non_config_group = self.add_argument_group(gettext("Non-config arguments"),
                                                    gettext("Arguments that are not written to the configuration file"))
-        non_config_group.add_argument('--output-file', '-o', default='nbc-config.yaml',
+        non_config_group.add_argument('--output', '-o', default='nbc-config.yaml',
                                       dest='non_config__output_file', metavar='FILE', help=gettext("Path to output file"))
         non_config_group.add_argument('--compile', '-c', action='store_true',
                                       dest='non_config__compile', help=gettext("Compile the application after generating the configuration file"))
