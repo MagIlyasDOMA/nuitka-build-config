@@ -25,10 +25,14 @@ class GeneratorParser(BaseParser):
         super().__init__(*args, **kwargs, epilog=epilog)
 
     def _add_config_root_arguments(self):
-        self.add_argument('--mode', dest='type',
+        type_group = self.add_mutually_exclusive_group()
+        type_group.add_argument('--mode', dest='type',
                           help=gettext("Compilation mode: 'accelerated' (with Python dependency), 'standalone' (folder with exe), "
                                        "'onefile' (single exe), 'module' (extension module), 'app' (onefile for macOS with .app), "
                                        "'app-dist' (standalone for macOS with .app), 'package' (package as module), 'dll' (experimental)"))
+        type_group.add_argument('--standalone', action='store_const', const='standalone', dest='type')
+        type_group.add_argument('--onefile', action='store_const', const='onefile', dest='type')
+
         self.add_argument('--run', dest='run', action='store_true',
                           help=gettext("Run the compiled binary immediately after compilation (--run)"))
 

@@ -15,7 +15,7 @@ __all__ = ['NuitkaBuilder', 'BuildRunOutput', 'BuilderParser', 'main']
 class BuilderParser(BaseParser):
     def add_arguments(self):
         self.add_argument('config_path', type=Path, help=gettext('Path to Nuitka config file'),
-                            nargs='?', default=None)
+                            nargs='?', default='nbc-config.yaml')
         self.add_argument('main', type=Path, help=gettext('Path to main Nuitka build file'),
                             nargs='?', default=None)
         self.add_argument('--dry-run', action='store_true', help=gettext('Dry run'))
@@ -32,7 +32,7 @@ class NuitkaBuilder(DecoratorMixin):
     @staticmethod
     def _field_is_cli(field_name: str) -> bool:
         field = NuitkaConfig.model_fields[field_name]
-        return not getattr(field, 'json_schema_extra', dict()).get('non_cli', False)
+        return not (getattr(field, 'json_schema_extra') or dict()).get('non_cli', False)
 
     @staticmethod
     def _get_argv_add_method_name(attr_name: str):
@@ -66,6 +66,7 @@ class NuitkaBuilder(DecoratorMixin):
         non_cli_arguments: NonCliArguments = self.non_cli_arguments
         pre_processes = list()
         post_processes = list()
+        print(self.argv)
         for command in non_cli_arguments['pre_compile_actions']:
             pre_processes.append(subprocess.run(command, text=True, shell=True))
         main_ = subprocess.run(self.argv, text=True)

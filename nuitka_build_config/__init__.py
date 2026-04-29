@@ -12,7 +12,7 @@ from .typings.models import NuitkaConfigDict
 __all__ = ['NuitkaBuilder', 'NuitkaConfig', 'NuitkaConfigDict', 'main', '__version__',
            'NuitkaGenerator', 'GeneratorParser', 'GeneratorArgs', 'generator_main',
            'BuildRunOutput', 'BuilderParser', 'builder_main']
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 
 
 def main():
@@ -20,7 +20,7 @@ def main():
     subparsers = parser.add_subparsers(dest='command')
     subparsers.add_parser('build', parser=BuilderParser, help=gettext("Build a Nuitka project"))
     subparsers.add_parser('generate', parser=GeneratorParser, help=gettext("Generate a Nuitka config file"))
-    args = parser.parse_args()
+    args = parser.parse_known_args()[0]
     argv = sys.argv[2:] if len(sys.argv) > 2 else []
     command = args.command
     if not command:
