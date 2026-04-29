@@ -20,10 +20,13 @@ def main():
     subparsers = parser.add_subparsers(dest='command')
     subparsers.add_parser('build', parser=BuilderParser, help=gettext("Build a Nuitka project"))
     subparsers.add_parser('generate', parser=GeneratorParser, help=gettext("Generate a Nuitka config file"))
-    subparsers.add_parser('help', help=parser.get_help_message(), add_help=False)
     args = parser.parse_args()
     argv = sys.argv[2:] if len(sys.argv) > 2 else []
-    match args.command:
+    command = args.command
+    if not command:
+        parser.print_help()
+        sys.exit(0)
+    match command:
         case 'build': NuitkaBuilder.cli_run(argv)
         case 'generate': NuitkaGenerator.cli_run(argv)
         case 'help':
