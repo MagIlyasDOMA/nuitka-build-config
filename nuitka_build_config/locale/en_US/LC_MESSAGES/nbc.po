@@ -4,7 +4,7 @@
 
 msgid ""
 msgstr ""
-"Project-Id-Version: nuitka-build-config 0.1.0\n"
+"Project-Id-Version: nuitka-build-config 0.3.0\n"
 "POT-Creation-Date: 2026-04-26 20:24+0300\n"
 "Last-Translator: MagIlyasDOMA <magilyas.doma.09@list.ru>\n"
 "Language: en\n"

@@ -32,6 +32,9 @@ class GeneratorParser(BaseParser):
                                        "'app-dist' (standalone for macOS with .app), 'package' (package as module), 'dll' (experimental)"))
         type_group.add_argument('--standalone', action='store_const', const='standalone', dest='type')
         type_group.add_argument('--onefile', action='store_const', const='onefile', dest='type')
+        type_group.add_argument('--module', action='store_const', const='module', dest='type')
+        type_group.add_argument('--package', action='store_const', const='package', dest='type')
+        type_group.add_argument('--dll', action='store_const', const='dll', dest='type')
 
         self.add_argument('--run', dest='run', action='store_true',
                           help=gettext("Run the compiled binary immediately after compilation (--run)"))
@@ -148,6 +151,12 @@ class GeneratorParser(BaseParser):
         actions_group.add_argument('--add-post-compile-action', '-p',
                                    dest='post_compile_actions', help=gettext("Commands executed after compilation"))
 
+    def _add_non_cli_arguments(self):
+        non_cli_group = self.add_argument_group(gettext("Non-CLI parameters"),
+                                                gettext("Parameters that are not passed to Nuitka, but are written to the configuration file"))
+        non_cli_group.add_argument('--time', '-t', dest='time', action='store_true',
+                                   help=gettext("Show how long it took for the program to complete"))
+
     def _add_non_config_arguments(self):
         non_config_group = self.add_argument_group(gettext("Non-config arguments"),
                                                    gettext("Arguments that are not written to the configuration file"))
@@ -164,6 +173,7 @@ class GeneratorParser(BaseParser):
         self._add_linux_arguments()
         self._add_version_info_arguments()
         self._add_actions_arguments()
+        self._add_non_cli_arguments()
         self._add_non_config_arguments()
         return self
 

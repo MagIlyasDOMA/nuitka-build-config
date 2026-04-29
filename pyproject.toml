@@ -43,4 +43,4 @@ nuitka_build_config = ["locale/**"]
 [devscript]
 sync = "git pull origin && uv sync"
 compile_i18n = "pybabel compile -d nuitka_build_config/locale -D nbc"
-generate_i18n_pot = "pybabel extract -F ./babel.cfg -o ./nuitka_build_config/locale/nbc.pot . --project=\"nuitka-build-config\" --version=\"0.1.0\" --last-translator=\"MagIlyasDOMA <magilyas.doma.09@list.ru>\""
+generate_i18n_pot = "pybabel extract -F ./babel.cfg -o ./nuitka_build_config/locale/nbc.pot . --project=\"nuitka-build-config\" --version=\"0.3.0\" --last-translator=\"MagIlyasDOMA <magilyas.doma.09@list.ru>\""

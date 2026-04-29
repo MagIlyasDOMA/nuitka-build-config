@@ -47,20 +47,17 @@ class DecoratorMixin(BaseBuilder):
 
     @argv_add
     def _add_follow_imports(self, argv: StrList, arg: Optional[bool]) -> StrList:
-        if arg is None:
-            return []
-        elif arg:
-            return ['--follow-imports']
-        else:
-            return ['--nofollow-imports']
+        if arg is None: return []
+        elif arg: return ['--follow-imports']
+        else: return ['--nofollow-imports']
 
     @argv_add
-    def _add_follow_import_to(self, argv: StrList, arg: str) -> StrList:
-        return [f'--follow-import-to={self._quote_marker}{arg}{self._quote_marker}']
+    def _add_follow_import_to(self, argv: StrList, arg: StrList) -> StrList:
+        return [f'--follow-import-to={self._quote_marker}{value}{self._quote_marker}' for value in arg]
 
     @argv_add
-    def _add_nofollow_import_to(self, argv: StrList, arg: str) -> StrList:
-        return [f'--nofollow-import-to={self._quote_marker}{arg}{self._quote_marker}']
+    def _add_nofollow_import_to(self, argv: StrList, arg: StrList) -> StrList:
+        return [f'--nofollow-import-to={self._quote_marker}{value}{self._quote_marker}' for value in arg]
 
     @argv_add
     def _add_plugins(self, argv: StrList, arg: StrList) -> StrList:
@@ -73,7 +70,7 @@ class DecoratorMixin(BaseBuilder):
     @argv_add
     def _add_main(self, argv: StrList, arg: NullPathLike) -> StrList:
         main = arg or self.main
-        return [f'--main={self._quote_marker}{main}{self._quote_marker}'] if main is None else []
+        return [f'--main={self._quote_marker}{main}{self._quote_marker}'] if main is not None else []
 
     @argv_add
     def _add_follow_stdlib(self, argv: StrList, arg: bool) -> StrList:

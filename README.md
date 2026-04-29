@@ -106,7 +106,6 @@ print(config.output_dir)  # ./dist
  |----------------|--------------------------------|
  | `nbc build`    | Run build from configuration   |
  | `nbc generate` | Generate config from arguments |
- | `nbc help`     | Help on commands               |
 
 ### Параметры `generate` (примеры)
 

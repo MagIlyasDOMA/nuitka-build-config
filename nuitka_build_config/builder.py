@@ -1,4 +1,4 @@
-import sys, subprocess
+import sys, subprocess, time
 from typing import Optional
 from pathlib import Path
 from pathlike_typing import PathLike
@@ -19,6 +19,8 @@ class BuilderParser(BaseParser):
         self.add_argument('main', type=Path, help=gettext('Path to main Nuitka build file'),
                             nargs='?', default=None)
         self.add_argument('--dry-run', action='store_true', help=gettext('Dry run'))
+        self.add_argument('--time', '-t', action='store_true',
+                          help=gettext("Show how long it took for the program to complete"))
 
 
 @dataclass
@@ -66,7 +68,6 @@ class NuitkaBuilder(DecoratorMixin):
         non_cli_arguments: NonCliArguments = self.non_cli_arguments
         pre_processes = list()
         post_processes = list()
-        print(self.argv)
         for command in non_cli_arguments['pre_compile_actions']:
             pre_processes.append(subprocess.run(command, text=True, shell=True))
         main_ = subprocess.run(self.argv, text=True)
@@ -76,13 +77,16 @@ class NuitkaBuilder(DecoratorMixin):
 
     @classmethod
     def cli_run(cls, args=None) -> Optional[BuildRunOutput]:
+        begin_time = time.time()
         parser = BuilderParser()
         args = parser.parse_args(args)
         builder = cls(args.config_path, args.main)
-        if args.dry_run:
-            print(builder.argv)
-            return None
-        return builder.run()
+        output = None
+        if args.dry_run: print(builder.argv)
+        else: output = builder.run()
+        if args.time or builder.non_cli_arguments['time']:
+            print(gettext("Completed in"), time.time() - begin_time, gettext('seconds'))
+        return output
 
 
 def main(): NuitkaBuilder.cli_run()

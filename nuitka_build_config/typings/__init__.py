@@ -34,4 +34,5 @@ ProcessesList = List[CompletedProcess]
 class NonCliArguments(TypedDict):
     pre_compile_actions: StrList
     post_compile_actions: StrList
+    time: bool
 

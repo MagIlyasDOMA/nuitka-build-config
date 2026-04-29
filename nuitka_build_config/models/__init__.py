@@ -159,6 +159,12 @@ class NuitkaConfig(BaseModel):
         json_schema_extra=dict(non_cli=True)
     )
 
+    time: bool = Field(
+        default=False,
+        description=gettext("Show how long it took for the program to complete"),
+        json_schema_extra=dict(non_cli=True)
+    )
+
     model_config = dict(
         title='nuitka-build-config',
         description='nuitka build config',

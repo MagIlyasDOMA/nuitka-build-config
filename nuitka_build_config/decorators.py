@@ -1,21 +1,9 @@
 import dataclasses
-from typing import Any, TYPE_CHECKING
+from typing import Any
 from .typings import ArgvAddFunc, StrList
-
-if TYPE_CHECKING:
-    from .base import DecoratorMixin
+from .utils import set_quotes
 
 __all__ = ['argv_add', 'dataclass']
-
-
-def set_quotes(self: DecoratorMixin, lst: StrList, /) -> StrList:
-    quote_marker = self._quote_marker
-    use_quotes = self._use_quotes
-    output = list()
-    for item in lst:
-        final_char = '"' if use_quotes else ''
-        output.append(item.replace(quote_marker, final_char))
-    return output
 
 
 def argv_add(method: ArgvAddFunc) -> ArgvAddFunc:
