@@ -129,7 +129,7 @@
             }
           ],
           "default": null,
-          "description": "Path to icon file (--linux-icon)",
+          "description": "Path to icon file. On Windows: --windows-icon-from-ico, on macOS: --macos-app-icon, on Linux: --linux-icon",
           "title": "Icon"
         }
       },
@@ -152,7 +152,7 @@
             }
           ],
           "default": null,
-          "description": "Path to icon file for macOS .app bundle (--macos-app-icon)",
+          "description": "Path to icon file. On Windows: --windows-icon-from-ico, on macOS: --macos-app-icon, on Linux: --linux-icon",
           "title": "Icon"
         },
         "create_app_bundle": {
@@ -252,7 +252,7 @@
             }
           ],
           "default": null,
-          "description": "Path to icon file (--windows-icon-from-ico)",
+          "description": "Path to icon file. On Windows: --windows-icon-from-ico, on macOS: --macos-app-icon, on Linux: --linux-icon",
           "title": "Icon"
         },
         "console_mode": {
@@ -508,6 +508,7 @@
       "items": {
         "type": "string"
       },
+      "non_cli": true,
       "title": "Pre Compile Actions",
       "type": "array"
     },
@@ -516,8 +517,16 @@
       "items": {
         "type": "string"
       },
+      "non_cli": true,
       "title": "Post Compile Actions",
       "type": "array"
+    },
+    "time": {
+      "default": false,
+      "description": "Show how long it took for the program to complete",
+      "non_cli": true,
+      "title": "Time",
+      "type": "boolean"
     }
   },
   "title": "nuitka-build-config",
