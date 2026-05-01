@@ -7,6 +7,8 @@ from ..typings import *
 from ..typings.models import NuitkaConfigDict
 from .osparams import *
 
+__all__ = ['Includes', 'VersionInfo', 'WindowsParams', 'MacOSParams', 'LinuxParams', 'NuitkaConfig', 'MODELS']
+
 
 class Includes(BaseModel):
     packages: StrList = Field(default_factory=list,
@@ -205,3 +207,6 @@ def model2dict(model: BaseModel) -> dict:
     for key, value in output.copy().items():
         if isinstance(value, BaseModel): output[key] = model2dict(value)
     return output
+
+
+MODELS = [Includes, VersionInfo, WindowsParams, MacOSParams, LinuxParams, NuitkaConfig]

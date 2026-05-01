@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nuitka-build-config"
-version = "0.3.1"
+version = "0.4.0"
 description = "Nuitka build config"
 requires-python = ">=3.9"
 dependencies = [
@@ -45,3 +45,4 @@ sync = "git pull origin && uv sync"
 compile_i18n = "pybabel compile -d nuitka_build_config/locale -D nbc"
 generate_i18n_pot = "pybabel extract -F ./babel.cfg -o ./nuitka_build_config/locale/nbc.pot . --project=\"nuitka-build-config\" --version=\"0.3.1\" --last-translator=\"MagIlyasDOMA <magilyas.doma.09@list.ru>\""
 generate_json_schema = "python create_json_schema.py"
+generate_typedicts = "python generate_typedicts.py"
