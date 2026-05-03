@@ -67,3 +67,4 @@ class NuitkaConfigDict(TypedDict, total=False):
     verbosity: Verbosity
     pre_compile_actions: StrList
     post_compile_actions: StrList
+    time: bool

@@ -31,7 +31,6 @@ nbc = "nuitka_build_config:main"
 dev = [
     "babel>=2.18.0",
     "devscript>=0.1.1",
-    "pydantic2typeddict ; python_full_version >= '3.11'",
 ]
 
 [tool.setuptools]
