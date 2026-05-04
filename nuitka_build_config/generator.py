@@ -71,6 +71,8 @@ class GeneratorParser(BaseParser):
                           help=gettext("Name of the output executable. For onefile may include path (--output-filename)"))
         self.add_argument('--remove-output', action='store_true', dest='remove_output',
                           help=gettext("Remove the build directory after creating the binary (--remove-output)"))
+        self.add_argument('--module-parameter', action='append', dest='module_parameters',
+                          help=gettext("Module parameters (--module-parameter)"))
 
         verbosity_group = self.add_mutually_exclusive_group()
         verbosity_group.add_argument('--verbose', action='store_const', const='verbose', dest='verbosity',
@@ -95,6 +97,8 @@ class GeneratorParser(BaseParser):
                                     metavar='DIRECTORIES', help=gettext("Data directories to include (--include-data-dir)"))
         includes_group.add_argument('--noinclude-data-files', action='append', dest='include__noinclude_data_files',
                                     metavar='NOINCLUDE_DATA_FILES', help=gettext("File patterns to exclude from data (--noinclude-data-files)"))
+        includes_group.add_argument('--include-distribution-metadata', action='append', dest='include__distribution_metadata',
+                                    metavar='DISTRIBUTION_METADATA', help=gettext("Packages distribution metadata (--include-distribution-metadata)"))
 
     def _add_windows_arguments(self):
         windows_group = self.add_argument_group("Windows parameters")
@@ -146,9 +150,9 @@ class GeneratorParser(BaseParser):
 
     def _add_actions_arguments(self):
         actions_group = self.add_argument_group(gettext("Commands"), gettext("Add commands to run before or after compilation"))
-        actions_group.add_argument('--add-pre-compile-action', '-b',
+        actions_group.add_argument('--add-pre-compile-action', '-b', action='append',
                                    dest='pre_compile_actions', help=gettext("Commands executed before compilation"))
-        actions_group.add_argument('--add-post-compile-action', '-p',
+        actions_group.add_argument('--add-post-compile-action', '-p', action='append',
                                    dest='post_compile_actions', help=gettext("Commands executed after compilation"))
 
     def _add_non_cli_arguments(self):
@@ -164,6 +168,8 @@ class GeneratorParser(BaseParser):
                                       dest='non_config__output_file', metavar='FILE', help=gettext("Path to output file"))
         non_config_group.add_argument('--compile', '-c', action='store_true',
                                       dest='non_config__compile', help=gettext("Compile the application after generating the configuration file"))
+        non_config_group.add_argument('--os-extra', '-X', action='store_true',
+                                      dest='non_config__os_extra', help=gettext("Extra flags will be written to the extra_flags section of your OS, not the general one"))
 
     def add_arguments(self) -> Self:
         self._add_config_root_arguments()

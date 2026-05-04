@@ -2,7 +2,7 @@ from typing import Optional, Literal
 from pathlike_typing import PathLike
 from pydantic import BaseModel, Field
 from ..i18n import gettext
-from ..typings import NullStr
+from ..typings import NullStr, StrList
 
 __all__ = ['BaseOSParams', 'WindowsParams', 'MacOSParams', 'LinuxParams']
 
@@ -11,6 +11,10 @@ class BaseOSParams(BaseModel):
     icon: Optional[PathLike] = Field(
         default=None,
         description=gettext("Path to icon file. On Windows: --windows-icon-from-ico, on macOS: --macos-app-icon, on Linux: --linux-icon")
+    )
+    extra_flags: StrList = Field(
+        default_factory=list,
+        description=gettext("Extra flags in this OS")
     )
 
 

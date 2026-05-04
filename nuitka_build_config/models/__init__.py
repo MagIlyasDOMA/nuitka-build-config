@@ -22,6 +22,8 @@ class Includes(BaseModel):
                                  description=gettext("Data directories to include (--include-data-dir)"))
     noinclude_data_files: StrList = Field(default_factory=list,
                                           description=gettext("File patterns to exclude from data (--noinclude-data-files)"))
+    distribution_metadata: StrList = Field(default_factory=list,
+                                           description=gettext("Packages distribution metadata (--include-distribution-metadata)"))
 
 
 class VersionInfo(BaseModel):
@@ -147,6 +149,11 @@ class NuitkaConfig(BaseModel):
     verbosity: Verbosity = Field(
         default='info',
         description=gettext("Console output verbosity level: info (default), quiet, verbose")
+    )
+
+    module_parameters: StrList = Field(
+        default_factory=list,
+        description=gettext("Module parameters (--module-parameter)")
     )
 
     pre_compile_actions: StrList = Field(

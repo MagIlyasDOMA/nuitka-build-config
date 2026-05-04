@@ -13,6 +13,7 @@ class IncludesDict(TypedDict, total=False):
     files: FilesList
     directories: FilesList
     noinclude_data_files: StrList
+    distribution_metadata: StrList
 
 # ============ VersionInfo ============
 class VersionInfoDict(TypedDict, total=False):
@@ -24,6 +25,7 @@ class VersionInfoDict(TypedDict, total=False):
 # ============ BaseOSParams ============
 class BaseOSParamsDict(TypedDict, total=False):
     icon: Optional[PathLike]
+    extra_flags: StrList
 
 # ============ WindowsParams ============
 class WindowsParamsDict(BaseOSParamsDict, total=False):
@@ -65,6 +67,7 @@ class NuitkaConfigDict(TypedDict, total=False):
     extra_flags: StrList
     version_info: VersionInfoDict
     verbosity: Verbosity
+    module_parameters: StrList
     pre_compile_actions: StrList
     post_compile_actions: StrList
     time: bool
