@@ -1,4 +1,5 @@
-import yaml
+import yaml, platform
+from argparse import Namespace, _ArgumentGroup
 from typing import Self, Tuple, Dict
 from pathlib import Path
 from pathlike_typing import PathLike
@@ -7,8 +8,9 @@ from .decorators import dataclass
 from .builder import NuitkaBuilder
 from .i18n import gettext
 from .models import NuitkaConfig
-from .typings import NullStr
+from .typings import NullStr, StrList
 from .typings.models import NuitkaConfigDict
+from .utils import get_os
 
 __all__ = ['GeneratorParser', 'GeneratorArgs', 'NuitkaGenerator', 'main']
 
@@ -20,6 +22,43 @@ class GeneratorArgs:
 
 
 class GeneratorParser(BaseParser):
+    class RawDict(dict):
+        _os_extra_dest = 'non_config__os_extra'
+
+        def __init__(self, args: Namespace, extra: StrList, /, parser: 'GeneratorParser', *,
+                     validate_main: bool = True, create_extra: bool = True):
+            super().__init__(vars(args))
+            self.args = args
+            self.extra = extra
+            self.parser = parser
+            if validate_main: self.validate_main()
+            if create_extra: self.create_extra()
+
+        def validate_main(self) -> str:
+            main_opt = self.get('main', None)
+            main_pos = self.pop('main_pos', None)
+            if not main_pos and not main_opt:
+                self.parser.error(gettext("'main' option is required"))
+            elif main_pos and main_opt:
+                self.parser.error(gettext("Use either just --main or just the positional argument"))
+            output = main_pos or main_opt
+            self['main'] = output
+            return output
+
+        @classmethod
+        def create_os_extra_argument(cls, group: _ArgumentGroup):
+            return group.add_argument('--os-extra', '-X', action='store_true', dest=cls._os_extra_dest,
+                                      help=gettext("Extra flags will be written to the extra_flags section of your OS, not the general one"))
+
+        def create_extra(self):
+            os_extra = self.get(self._os_extra_dest, False)
+            extra = self.extra
+            os_name = get_os()
+            params_param = f'{os_name}_params'
+            dct = self[params_param] if os_extra and os_name is not None and params_param in self else self
+            dct['extra_flags'] = extra
+            return self.extra
+
     def __init__(self, *args, epilog: NullStr = None, **kwargs):
         if epilog is None: epilog = gettext("Extra arguments are added to extra_flags")
         super().__init__(*args, **kwargs, epilog=epilog)
@@ -168,8 +207,7 @@ class GeneratorParser(BaseParser):
                                       dest='non_config__output_file', metavar='FILE', help=gettext("Path to output file"))
         non_config_group.add_argument('--compile', '-c', action='store_true',
                                       dest='non_config__compile', help=gettext("Compile the application after generating the configuration file"))
-        non_config_group.add_argument('--os-extra', '-X', action='store_true',
-                                      dest='non_config__os_extra', help=gettext("Extra flags will be written to the extra_flags section of your OS, not the general one"))
+        self.RawDict.create_os_extra_argument(non_config_group)
 
     def add_arguments(self) -> Self:
         self._add_config_root_arguments()
@@ -183,20 +221,9 @@ class GeneratorParser(BaseParser):
         self._add_non_config_arguments()
         return self
 
-    def _validate_main(self, dct: dict, /) -> str:
-        main_opt = dct.get('main', None)
-        main_pos = dct.pop('main_pos') if 'main_pos' in dct else None
-        if not main_pos and not main_opt: self.error(gettext("'main' option is required"))
-        elif main_pos and main_opt: self.error(gettext("Use either just --main or just the positional argument"))
-        output = main_pos or main_opt
-        dct['main'] = output
-        return output
-
     def parse_to_dicts(self, args=None, add_nones: bool = False) -> Tuple[NuitkaConfigDict, Dict[str, str]]:
         args, extra = self.parse_known_args(args)
-        raw_dict = vars(args)
-        self._validate_main(raw_dict)
-        raw_dict['extra_flags'] = extra
+        raw_dict = self.RawDict(args, extra, self)
         output = dict()
         non_config_items = dict()
         for key, value in raw_dict.items():

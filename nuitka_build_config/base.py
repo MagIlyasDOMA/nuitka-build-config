@@ -4,7 +4,7 @@ from argparse_help_i18n import HelpI18nMixin
 from pathlib import Path
 from typing import Set, Optional, Self
 from pathlike_typing import PathLike
-from .decorators import argv_add
+from .decorators import argv_add, os_params
 from .typings import *
 from .typings.models import *
 
@@ -31,18 +31,19 @@ class DecoratorMixin(BaseBuilder):
         return [f'--mode={self._quote_marker}{arg}{self._quote_marker}']
 
     @argv_add
-    def _add_run(self, argv: StrList, arg: bool) -> StrList:
-        return ['--run'] if arg else []
+    def _add_run(self, argv: StrList, arg: bool) -> StrList: return ['--run'] if arg else []
 
     @argv_add
     def _add_include(self, argv: StrList, arg: IncludesDict) -> StrList:
         output = list()
-        output.extend([f'--include-package={self._quote_marker}{package}{self._quote_marker}' for package in arg['packages']])
-        output.extend([f'--include-module={self._quote_marker}{module}{self._quote_marker}' for module in arg['modules']])
-        output.extend([f'--include-package-data={self._quote_marker}{package}{self._quote_marker}' for package in arg['package_data']])
-        output.extend([f'--include-data-files={self._quote_marker}{self._parse_include_file(file)}{self._quote_marker}' for file in arg['files']])
-        output.extend([f'--include-data-dir={self._quote_marker}{self._parse_include_file(directory)}{self._quote_marker}' for directory in arg['directories']])
-        output.extend([f'--noinclude-data-files={self._quote_marker}{pattern}{self._quote_marker}' for pattern in arg['noinclude_data_files']])
+        q = self._quote_marker
+        output.extend([f'--include-package={q}{package}{q}' for package in arg['packages']])
+        output.extend([f'--include-module={q}{module}{q}' for module in arg['modules']])
+        output.extend([f'--include-package-data={q}{package}{q}' for package in arg['package_data']])
+        output.extend([f'--include-data-files={q}{self._parse_include_file(file)}{q}' for file in arg['files']])
+        output.extend([f'--include-data-dir={q}{self._parse_include_file(directory)}{q}' for directory in arg['directories']])
+        output.extend([f'--noinclude-data-files={q}{pattern}{q}' for pattern in arg['noinclude_data_files']])
+        output.extend([f'--include-distribution-metadata={q}{package}{q}' for package in arg['distribution_metadata']])
         return output
 
     @argv_add
@@ -76,7 +77,7 @@ class DecoratorMixin(BaseBuilder):
     def _add_follow_stdlib(self, argv: StrList, arg: bool) -> StrList:
         return ['--follow-stdlib'] if arg else []
 
-    @argv_add
+    @os_params
     def _add_windows_params(self, argv: StrList, arg: WindowsParamsDict) -> StrList:
         output = list()
         if platform.system() == 'Windows':
@@ -90,7 +91,7 @@ class DecoratorMixin(BaseBuilder):
             if arg['uac_uiaccess']: output.append('--windows-uac-access')
         return output
 
-    @argv_add
+    @os_params
     def _add_macos_params(self, argv: StrList, arg: MacOSParamsDict) -> StrList:
         output = list()
         if platform.system() == 'Darwin':
@@ -101,7 +102,7 @@ class DecoratorMixin(BaseBuilder):
             if signed_app_name: output.append(f'--macos-signed-app-name={self._quote_marker}{signed_app_name}{self._quote_marker}')
         return output
 
-    @argv_add
+    @os_params
     def _add_linux_params(self, argv: StrList, arg: LinuxParamsDict) -> StrList:
         output = list()
         if platform.system() == 'Linux':
@@ -118,12 +119,10 @@ class DecoratorMixin(BaseBuilder):
         return [f'--jobs={self._quote_marker}{arg}{self._quote_marker}'] if arg else []
 
     @argv_add
-    def _add_debug(self, argv: StrList, arg: bool) -> StrList:
-        return ['--debug'] if arg else []
+    def _add_debug(self, argv: StrList, arg: bool) -> StrList: return ['--debug'] if arg else []
 
     @argv_add
-    def _add_report(self, argv: StrList, arg: NullPathLike) -> StrList:
-        return ['--report'] if arg else []
+    def _add_report(self, argv: StrList, arg: NullPathLike) -> StrList: return ['--report'] if arg else []
 
     @argv_add
     def _add_output_dir(self, argv: StrList, arg: NullPathLike) -> StrList:
@@ -140,14 +139,10 @@ class DecoratorMixin(BaseBuilder):
     @argv_add
     def _add_verbosity(self, argv: StrList, arg: Verbosity) -> StrList:
         match arg:
-            case 'info':
-                return []
-            case 'quiet':
-                return ['--quiet']
-            case 'verbose':
-                return ['--verbose']
-            case _:
-                raise KeyError(arg)
+            case 'info': return []
+            case 'quiet': return ['--quiet']
+            case 'verbose': return ['--verbose']
+            case _: raise KeyError(arg)
 
     @argv_add
     def _add_extra_flags(self, argv: StrList, arg: StrList) -> StrList:
@@ -165,6 +160,10 @@ class DecoratorMixin(BaseBuilder):
             value = arg[key]  # type: ignore
             if value: output.append(f'{option_name}={self._quote_marker}{value}{self._quote_marker}')
         return output
+
+    @argv_add
+    def _add_module_parameters(self, argv: StrList, arg: StrList) -> StrList:
+        return [f'--module-parameter={self._quote_marker}{param}{self._quote_marker}' for param in arg]
 
 
 class BaseParser(HelpI18nMixin, metaclass=ABCMeta):
