@@ -4,8 +4,8 @@
 
 msgid ""
 msgstr ""
-"Project-Id-Version: nuitka-build-config 0.3.1\n"
-"POT-Creation-Date: 2026-04-30 18:38+0300\n"
+"Project-Id-Version: nuitka-build-config 0.4.1\n"
+"POT-Creation-Date: 2026-05-06 19:18+0300\n"
 "Last-Translator: MagIlyasDOMA <magilyas.doma.09@list.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -33,9 +33,8 @@ msgstr "Путь к главному файлу сборки Nuitka"
 msgid "Dry run"
 msgstr "Пробный запуск (без выполнения)"
 
-#: nuitka_build_config/builder.py:23
-#: nuitka_build_config/generator.py:158
-#: nuitka_build_config/models/__init__.py:164
+#: nuitka_build_config/builder.py:23 nuitka_build_config/generator.py:201
+#: nuitka_build_config/models/__init__.py:173
 msgid "Show how long it took for the program to complete"
 msgstr "Показать время выполнения программы"
 
@@ -47,12 +46,27 @@ msgstr "Завершено за"
 msgid "seconds"
 msgstr "секунд"
 
-#: nuitka_build_config/generator.py:24
+#: nuitka_build_config/generator.py:41
+msgid "'main' option is required"
+msgstr "Требуется параметр 'main'"
+
+#: nuitka_build_config/generator.py:43
+msgid "Use either just --main or just the positional argument"
+msgstr "Используйте либо только --main, либо только позиционный аргумент"
+
+#: nuitka_build_config/generator.py:51
+msgid ""
+"Extra flags will be written to the extra_flags section of your OS, not "
+"the general one"
+msgstr ""
+"Дополнительные флаги будут записаны в секцию extra_flags вашей ОС, а не в общую"
+
+#: nuitka_build_config/generator.py:63
 msgid "Extra arguments are added to extra_flags"
 msgstr "Дополнительные аргументы добавляются в extra_flags"
 
-#: nuitka_build_config/generator.py:30
-#: nuitka_build_config/models/__init__.py:35
+#: nuitka_build_config/generator.py:69
+#: nuitka_build_config/models/__init__.py:39
 msgid ""
 "Compilation mode: 'accelerated' (with Python dependency), 'standalone' "
 "(folder with exe), 'onefile' (single exe), 'module' (extension module), "
@@ -64,24 +78,24 @@ msgstr ""
 "'app' (один файл для macOS с .app), 'app-dist' (автономный для macOS "
 "с .app), 'package' (пакет как модуль), 'dll' (экспериментальный)"
 
-#: nuitka_build_config/generator.py:40
-#: nuitka_build_config/models/__init__.py:42
+#: nuitka_build_config/generator.py:79
+#: nuitka_build_config/models/__init__.py:46
 msgid "Run the compiled binary immediately after compilation (--run)"
 msgstr "Запустить скомпилированный бинарный файл сразу после компиляции (--run)"
 
-#: nuitka_build_config/generator.py:44
+#: nuitka_build_config/generator.py:83
 msgid "Follow all imported modules. In standalone mode defaults to True"
 msgstr "Следовать за всеми импортированными модулями. В автономном режиме по умолчанию включено"
 
-#: nuitka_build_config/generator.py:46
+#: nuitka_build_config/generator.py:85
 msgid "DO NOT follow all imported modules"
 msgstr "НЕ следовать за всеми импортированными модулями"
 
-#: nuitka_build_config/generator.py:49
+#: nuitka_build_config/generator.py:88
 msgid "Follow into the specified modules/packages. Example: 'requests', 'numpy'"
 msgstr "Следовать в указанные модули/пакеты. Пример: 'requests', 'numpy'"
 
-#: nuitka_build_config/generator.py:51
+#: nuitka_build_config/generator.py:90
 msgid ""
 "DO NOT follow into the specified modules/packages. Supports patterns, "
 "e.g. '*.tests'"
@@ -89,25 +103,25 @@ msgstr ""
 "НЕ следовать в указанные модули/пакеты. Поддерживает шаблоны, "
 "например '*.tests'"
 
-#: nuitka_build_config/generator.py:53
+#: nuitka_build_config/generator.py:92
 msgid "List of plugins to enable. Example: 'tk-inter', 'anti-bloat'"
 msgstr "Список включаемых плагинов. Пример: 'tk-inter', 'anti-bloat'"
 
-#: nuitka_build_config/generator.py:55
+#: nuitka_build_config/generator.py:94
 msgid "List of plugins to disable"
 msgstr "Список отключаемых плагинов"
 
-#: nuitka_build_config/generator.py:57
-#: nuitka_build_config/models/__init__.py:77
+#: nuitka_build_config/generator.py:96
+#: nuitka_build_config/models/__init__.py:81
 msgid "Main file to compile (alternative to positional argument --main)"
 msgstr "Главный файл для компиляции (альтернатива позиционному аргументу --main)"
 
-#: nuitka_build_config/generator.py:59
+#: nuitka_build_config/generator.py:98
 msgid "Main file to compile (positional argument)"
 msgstr "Главный файл для компиляции (позиционный аргумент)"
 
-#: nuitka_build_config/generator.py:61
-#: nuitka_build_config/models/__init__.py:102
+#: nuitka_build_config/generator.py:100
+#: nuitka_build_config/models/__init__.py:106
 msgid ""
 "Python flags: '-S' (no_site), '-O' (no_asserts), 'no_warnings', "
 "'no_docstrings', '-u' (unbuffered)"
@@ -115,8 +129,8 @@ msgstr ""
 "Флаги Python: '-S' (no_site), '-O' (no_asserts), 'no_warnings', "
 "'no_docstrings', '-u' (небуферизованный)"
 
-#: nuitka_build_config/generator.py:63
-#: nuitka_build_config/models/__init__.py:107
+#: nuitka_build_config/generator.py:102
+#: nuitka_build_config/models/__init__.py:111
 msgid ""
 "Number of parallel compilation jobs. Negative values = CPU cores minus "
 "value (--jobs)"
@@ -124,23 +138,23 @@ msgstr ""
 "Количество параллельных задач компиляции. Отрицательные значения = ядра "
 "ЦП минус значение (--jobs)"
 
-#: nuitka_build_config/generator.py:65
-#: nuitka_build_config/models/__init__.py:112
+#: nuitka_build_config/generator.py:104
+#: nuitka_build_config/models/__init__.py:116
 msgid "Enable debug mode: self-checks, additional checks (--debug)"
 msgstr "Включить режим отладки: самопроверки, дополнительные проверки (--debug)"
 
-#: nuitka_build_config/generator.py:67
-#: nuitka_build_config/models/__init__.py:117
+#: nuitka_build_config/generator.py:106
+#: nuitka_build_config/models/__init__.py:121
 msgid "Create an XML compilation report (--report)"
 msgstr "Создать XML-отчёт о компиляции (--report)"
 
-#: nuitka_build_config/generator.py:69
-#: nuitka_build_config/models/__init__.py:122
+#: nuitka_build_config/generator.py:108
+#: nuitka_build_config/models/__init__.py:126
 msgid "Directory for output files (build, dist, binaries) (--output-dir)"
 msgstr "Каталог для выходных файлов (build, dist, бинарные файлы) (--output-dir)"
 
-#: nuitka_build_config/generator.py:71
-#: nuitka_build_config/models/__init__.py:127
+#: nuitka_build_config/generator.py:110
+#: nuitka_build_config/models/__init__.py:131
 msgid ""
 "Name of the output executable. For onefile may include path (--output-"
 "filename)"
@@ -148,64 +162,74 @@ msgstr ""
 "Имя выходного исполняемого файла. Для onefile может включать путь (--output-"
 "filename)"
 
-#: nuitka_build_config/generator.py:73
-#: nuitka_build_config/models/__init__.py:132
+#: nuitka_build_config/generator.py:112
+#: nuitka_build_config/models/__init__.py:136
 msgid "Remove the build directory after creating the binary (--remove-output)"
 msgstr "Удалить каталог сборки после создания бинарного файла (--remove-output)"
 
-#: nuitka_build_config/generator.py:77
+#: nuitka_build_config/generator.py:114
+#: nuitka_build_config/models/__init__.py:156
+msgid "Module parameters (--module-parameter)"
+msgstr "Параметры модуля (--module-parameter)"
+
+#: nuitka_build_config/generator.py:118
 msgid "Console output verbosity level: verbose"
 msgstr "Уровень подробности вывода в консоль: подробный"
 
-#: nuitka_build_config/generator.py:79
+#: nuitka_build_config/generator.py:120
 msgid "Console output verbosity level: quiet"
 msgstr "Уровень подробности вывода в консоль: тихий"
 
-#: nuitka_build_config/generator.py:84
-#: nuitka_build_config/models/__init__.py:47
+#: nuitka_build_config/generator.py:125
+#: nuitka_build_config/models/__init__.py:51
 msgid "Settings for including additional modules, packages and data files"
 msgstr "Настройки для включения дополнительных модулей, пакетов и файлов данных"
 
-#: nuitka_build_config/generator.py:86
-#: nuitka_build_config/models/__init__.py:13
+#: nuitka_build_config/generator.py:127
+#: nuitka_build_config/models/__init__.py:15
 msgid "List of packages to include in the build (--include-package)"
 msgstr "Список пакетов для включения в сборку (--include-package)"
 
-#: nuitka_build_config/generator.py:88
-#: nuitka_build_config/models/__init__.py:15
+#: nuitka_build_config/generator.py:129
+#: nuitka_build_config/models/__init__.py:17
 msgid "List of modules to include in the build (--include-module)"
 msgstr "Список модулей для включения в сборку (--include-module)"
 
-#: nuitka_build_config/generator.py:91
-#: nuitka_build_config/models/__init__.py:17
+#: nuitka_build_config/generator.py:132
+#: nuitka_build_config/models/__init__.py:19
 msgid "Packages whose data files should be included (--include-package-data)"
 msgstr "Пакеты, файлы данных которых следует включить (--include-package-data)"
 
-#: nuitka_build_config/generator.py:93
-#: nuitka_build_config/models/__init__.py:18
+#: nuitka_build_config/generator.py:134
+#: nuitka_build_config/models/__init__.py:20
 msgid "File patterns to include (--include-data-files)"
 msgstr "Шаблоны файлов для включения (--include-data-files)"
 
-#: nuitka_build_config/generator.py:95
-#: nuitka_build_config/models/__init__.py:20
+#: nuitka_build_config/generator.py:136
+#: nuitka_build_config/models/__init__.py:22
 msgid "Data directories to include (--include-data-dir)"
 msgstr "Каталоги данных для включения (--include-data-dir)"
 
-#: nuitka_build_config/generator.py:97
-#: nuitka_build_config/models/__init__.py:22
+#: nuitka_build_config/generator.py:138
+#: nuitka_build_config/models/__init__.py:24
 msgid "File patterns to exclude from data (--noinclude-data-files)"
 msgstr "Шаблоны файлов для исключения из данных (--noinclude-data-files)"
 
-#: nuitka_build_config/generator.py:103
+#: nuitka_build_config/generator.py:140
+#: nuitka_build_config/models/__init__.py:26
+msgid "Packages distribution metadata (--include-distribution-metadata)"
+msgstr "Метаданные дистрибуции пакетов (--include-distribution-metadata)"
+
+#: nuitka_build_config/generator.py:146
 msgid "Path to icon file (ICO format)"
 msgstr "Путь к файлу иконки (формат ICO)"
 
-#: nuitka_build_config/generator.py:105
+#: nuitka_build_config/generator.py:148
 msgid "Extract icon from existing EXE file"
 msgstr "Извлечь иконку из существующего EXE-файла"
 
-#: nuitka_build_config/generator.py:108
-#: nuitka_build_config/models/osparams.py:20
+#: nuitka_build_config/generator.py:151
+#: nuitka_build_config/models/osparams.py:24
 msgid ""
 "Windows console mode: 'force' - create a console window (if not started "
 "from console), 'disable' - do not create a console (--windows-console-"
@@ -214,13 +238,13 @@ msgstr ""
 "Режим консоли Windows: 'force' - создать окно консоли (если запущено не из "
 "консоли), 'disable' - не создавать консоль (--windows-console-mode)"
 
-#: nuitka_build_config/generator.py:111
-#: nuitka_build_config/models/osparams.py:26
+#: nuitka_build_config/generator.py:154
+#: nuitka_build_config/models/osparams.py:30
 msgid "Request administrator privileges via UAC on launch (--windows-uac-admin)"
 msgstr "Запрашивать права администратора через UAC при запуске (--windows-uac-admin)"
 
-#: nuitka_build_config/generator.py:113
-#: nuitka_build_config/models/osparams.py:31
+#: nuitka_build_config/generator.py:156
+#: nuitka_build_config/models/osparams.py:35
 msgid ""
 "Request UAC to launch only from specific folders and remote access "
 "(--windows-uac-uiaccess)"
@@ -228,12 +252,12 @@ msgstr ""
 "Запрашивать UAC для запуска только из определённых папок и удалённого доступа "
 "(--windows-uac-uiaccess)"
 
-#: nuitka_build_config/generator.py:119
+#: nuitka_build_config/generator.py:162
 msgid "Path to icon file for macOS .app bundle (--macos-app-icon)"
 msgstr "Путь к файлу иконки для пакета .app в macOS (--macos-app-icon)"
 
-#: nuitka_build_config/generator.py:121
-#: nuitka_build_config/models/osparams.py:38
+#: nuitka_build_config/generator.py:164
+#: nuitka_build_config/models/osparams.py:42
 msgid ""
 "Create a .app bundle instead of a regular binary. Enables standalone mode"
 " (--macos-create-app-bundle)"
@@ -241,8 +265,8 @@ msgstr ""
 "Создать пакет .app вместо обычного бинарного файла. Включает автономный режим "
 "(--macos-create-app-bundle)"
 
-#: nuitka_build_config/generator.py:124
-#: nuitka_build_config/models/osparams.py:43
+#: nuitka_build_config/generator.py:167
+#: nuitka_build_config/models/osparams.py:47
 msgid ""
 "Application name for macOS signing in 'com.YourCompany.AppName' format. "
 "Globally unique identifier for accessing protected APIs (--macos-signed-"
@@ -252,84 +276,76 @@ msgstr ""
 "Глобально уникальный идентификатор для доступа к защищённым API (--macos-signed-"
 "app-name)"
 
-#: nuitka_build_config/generator.py:130
+#: nuitka_build_config/generator.py:173
 msgid "Path to icon file for Linux (--linux-icon)"
 msgstr "Путь к файлу иконки для Linux (--linux-icon)"
 
-#: nuitka_build_config/generator.py:136
-#: nuitka_build_config/models/__init__.py:26
+#: nuitka_build_config/generator.py:179
+#: nuitka_build_config/models/__init__.py:30
 msgid "Company name in version info (--company-name)"
 msgstr "Название компании в информации о версии (--company-name)"
 
-#: nuitka_build_config/generator.py:139
-#: nuitka_build_config/models/__init__.py:27
+#: nuitka_build_config/generator.py:182
+#: nuitka_build_config/models/__init__.py:31
 msgid "Product name in version info (--product-name)"
 msgstr "Название продукта в информации о версии (--product-name)"
 
-#: nuitka_build_config/generator.py:142
-#: nuitka_build_config/models/__init__.py:28
+#: nuitka_build_config/generator.py:185
+#: nuitka_build_config/models/__init__.py:32
 msgid "File version in X.X.X.X format (--file-version)"
 msgstr "Версия файла в формате X.X.X.X (--file-version)"
 
-#: nuitka_build_config/generator.py:145
-#: nuitka_build_config/models/__init__.py:29
+#: nuitka_build_config/generator.py:188
+#: nuitka_build_config/models/__init__.py:33
 msgid "Copyright text (--copyright)"
 msgstr "Текст авторского права (--copyright)"
 
-#: nuitka_build_config/generator.py:148
+#: nuitka_build_config/generator.py:191
 msgid "Commands"
 msgstr "Команды"
 
-#: nuitka_build_config/generator.py:148
+#: nuitka_build_config/generator.py:191
 msgid "Add commands to run before or after compilation"
 msgstr "Добавить команды для выполнения до или после компиляции"
 
-#: nuitka_build_config/generator.py:150
-#: nuitka_build_config/models/__init__.py:152
+#: nuitka_build_config/generator.py:193
+#: nuitka_build_config/models/__init__.py:161
 msgid "Commands executed before compilation"
 msgstr "Команды, выполняемые перед компиляцией"
 
-#: nuitka_build_config/generator.py:152
-#: nuitka_build_config/models/__init__.py:158
+#: nuitka_build_config/generator.py:195
+#: nuitka_build_config/models/__init__.py:167
 msgid "Commands executed after compilation"
 msgstr "Команды, выполняемые после компиляции"
 
-#: nuitka_build_config/generator.py:155
+#: nuitka_build_config/generator.py:198
 msgid "Non-CLI parameters"
 msgstr "Параметры не из CLI"
 
-#: nuitka_build_config/generator.py:156
+#: nuitka_build_config/generator.py:199
 msgid ""
 "Parameters that are not passed to Nuitka, but are written to the "
 "configuration file"
 msgstr ""
 "Параметры, которые не передаются в Nuitka, но записываются в файл конфигурации"
 
-#: nuitka_build_config/generator.py:161
+#: nuitka_build_config/generator.py:204
 msgid "Non-config arguments"
 msgstr "Аргументы не из конфигурации"
 
-#: nuitka_build_config/generator.py:162
+#: nuitka_build_config/generator.py:205
 msgid "Arguments that are not written to the configuration file"
 msgstr "Аргументы, которые не записываются в файл конфигурации"
 
-#: nuitka_build_config/generator.py:164
+#: nuitka_build_config/generator.py:207
 msgid "Path to output file"
 msgstr "Путь к выходному файлу"
 
-#: nuitka_build_config/generator.py:166
+#: nuitka_build_config/generator.py:209
 msgid "Compile the application after generating the configuration file"
 msgstr "Скомпилировать приложение после создания файла конфигурации"
 
-#: nuitka_build_config/generator.py:183
-msgid "'main' option is required"
-msgstr "Требуется параметр 'main'"
-
-#: nuitka_build_config/generator.py:184
-msgid "Use either just --main or just the positional argument"
-msgstr "Используйте либо только --main, либо только позиционный аргумент"
-
-#: nuitka_build_config/models/__init__.py:52
+#: nuitka_build_config/models/__init__.py:56
 msgid ""
 "Follow all imported modules. In standalone mode defaults to True "
 "(--follow-imports)"
@@ -337,7 +353,7 @@ msgstr ""
 "Следовать за всеми импортированными модулями. В автономном режиме по умолчанию "
 "включено (--follow-imports)"
 
-#: nuitka_build_config/models/__init__.py:57
+#: nuitka_build_config/models/__init__.py:61
 msgid ""
 "Follow into the specified modules/packages (--follow-import-to). Example:"
 " 'requests', 'numpy'"
@@ -345,7 +361,7 @@ msgstr ""
 "Следовать в указанные модули/пакеты (--follow-import-to). Пример: "
 "'requests', 'numpy'"
 
-#: nuitka_build_config/models/__init__.py:62
+#: nuitka_build_config/models/__init__.py:66
 msgid ""
 "DO NOT follow into the specified modules/packages. Supports patterns, "
 "e.g. '*.tests' (--nofollow-import-to)"
@@ -353,7 +369,7 @@ msgstr ""
 "НЕ следовать в указанные модули/пакеты. Поддерживает шаблоны, "
 "например '*.tests' (--nofollow-import-to)"
 
-#: nuitka_build_config/models/__init__.py:67
+#: nuitka_build_config/models/__init__.py:71
 msgid ""
 "List of plugins to enable (--enable-plugins). Example: 'tk-inter', 'anti-"
 "bloat'"
@@ -361,11 +377,11 @@ msgstr ""
 "Список включаемых плагинов (--enable-plugins). Пример: 'tk-inter', 'anti-"
 "bloat'"
 
-#: nuitka_build_config/models/__init__.py:72
+#: nuitka_build_config/models/__init__.py:76
 msgid "List of plugins to disable (--disable-plugins)"
 msgstr "Список отключаемых плагинов (--disable-plugins)"
 
-#: nuitka_build_config/models/__init__.py:82
+#: nuitka_build_config/models/__init__.py:86
 msgid ""
 "Follow into standard library modules. Increases compilation time "
 "(--follow-stdlib)"
@@ -373,23 +389,23 @@ msgstr ""
 "Следовать в модули стандартной библиотеки. Увеличивает время компиляции "
 "(--follow-stdlib)"
 
-#: nuitka_build_config/models/__init__.py:87
+#: nuitka_build_config/models/__init__.py:91
 msgid "Windows parameters: console mode, UAC, icon, etc."
 msgstr "Параметры Windows: режим консоли, UAC, иконка и т.д."
 
-#: nuitka_build_config/models/__init__.py:92
+#: nuitka_build_config/models/__init__.py:96
 msgid "macOS parameters: .app bundle creation, signing, version, etc."
 msgstr "Параметры macOS: создание пакета .app, подпись, версия и т.д."
 
-#: nuitka_build_config/models/__init__.py:97
+#: nuitka_build_config/models/__init__.py:101
 msgid "Linux parameters: icon and other settings"
 msgstr "Параметры Linux: иконка и другие настройки"
 
-#: nuitka_build_config/models/__init__.py:137
+#: nuitka_build_config/models/__init__.py:141
 msgid "Additional Nuitka command line flags not described in this model"
 msgstr "Дополнительные флаги командной строки Nuitka, не описанные в этой модели"
 
-#: nuitka_build_config/models/__init__.py:142
+#: nuitka_build_config/models/__init__.py:146
 msgid ""
 "Version info for Windows/macOS: company name, product name, file version,"
 " copyright"
@@ -397,7 +413,7 @@ msgstr ""
 "Информация о версии для Windows/macOS: название компании, название продукта, "
 "версия файла, авторское право"
 
-#: nuitka_build_config/models/__init__.py:147
+#: nuitka_build_config/models/__init__.py:151
 msgid "Console output verbosity level: info (default), quiet, verbose"
 msgstr "Уровень подробности вывода в консоль: info (по умолчанию), quiet, verbose"
 
@@ -408,3 +424,7 @@ msgid ""
 msgstr ""
 "Путь к файлу иконки. В Windows: --windows-icon-from-ico, в macOS: "
 "--macos-app-icon, в Linux: --linux-icon"
+
+#: nuitka_build_config/models/osparams.py:17
+msgid "Extra flags in this OS"
+msgstr "Дополнительные флаги для данной ОС"

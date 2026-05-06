@@ -108,6 +108,14 @@
           },
           "title": "Noinclude Data Files",
           "type": "array"
+        },
+        "distribution_metadata": {
+          "description": "Packages distribution metadata (--include-distribution-metadata)",
+          "items": {
+            "type": "string"
+          },
+          "title": "Distribution Metadata",
+          "type": "array"
         }
       },
       "title": "Includes",
@@ -131,6 +139,14 @@
           "default": null,
           "description": "Path to icon file. On Windows: --windows-icon-from-ico, on macOS: --macos-app-icon, on Linux: --linux-icon",
           "title": "Icon"
+        },
+        "extra_flags": {
+          "description": "Extra flags in this OS",
+          "items": {
+            "type": "string"
+          },
+          "title": "Extra Flags",
+          "type": "array"
         }
       },
       "title": "LinuxParams",
@@ -154,6 +170,14 @@
           "default": null,
           "description": "Path to icon file. On Windows: --windows-icon-from-ico, on macOS: --macos-app-icon, on Linux: --linux-icon",
           "title": "Icon"
+        },
+        "extra_flags": {
+          "description": "Extra flags in this OS",
+          "items": {
+            "type": "string"
+          },
+          "title": "Extra Flags",
+          "type": "array"
         },
         "create_app_bundle": {
           "default": false,
@@ -254,6 +278,14 @@
           "default": null,
           "description": "Path to icon file. On Windows: --windows-icon-from-ico, on macOS: --macos-app-icon, on Linux: --linux-icon",
           "title": "Icon"
+        },
+        "extra_flags": {
+          "description": "Extra flags in this OS",
+          "items": {
+            "type": "string"
+          },
+          "title": "Extra Flags",
+          "type": "array"
         },
         "console_mode": {
           "default": "force",
@@ -502,6 +534,14 @@
       ],
       "title": "Verbosity",
       "type": "string"
+    },
+    "module_parameters": {
+      "description": "Module parameters (--module-parameter)",
+      "items": {
+        "type": "string"
+      },
+      "title": "Module Parameters",
+      "type": "array"
     },
     "pre_compile_actions": {
       "description": "Commands executed before compilation",
