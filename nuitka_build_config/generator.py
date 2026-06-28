@@ -19,6 +19,7 @@ __all__ = ['GeneratorParser', 'GeneratorArgs', 'NuitkaGenerator', 'main']
 class GeneratorArgs:
     output_file: str
     compile: bool
+    os_extra: bool
 
 
 class GeneratorParser(BaseParser):
